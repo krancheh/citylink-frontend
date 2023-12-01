@@ -1,0 +1,29 @@
+@use "src/index";
+
+.input {
+  position: relative;
+  margin-top: 28px;
+
+  span {
+    position: absolute;
+    left: 14px;
+    top: 5px;
+    color: index.$common-grey;
+    pointer-events: none;
+    transition: transform .2s;
+  }
+
+  .active {
+    transform: translate(-10px, -28px);
+  }
+
+  .input-element {
+    padding: 5px 14px;
+    width: 100%;
+    background-color: #fafafa;
+    border-radius: 5px;
+    border: 1px solid #BBB;
+    resize: vertical;
+  }
+}
+

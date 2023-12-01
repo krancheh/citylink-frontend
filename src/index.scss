@@ -1,0 +1,72 @@
+// COLORS
+$base-color: #3C9379;
+$common-black: #101913;
+$common-grey: #535A56;
+
+// FONTS
+@font-face {
+  font-family: 'Manrope';
+  src: url("./assets/fonts/Manrope-Regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url("./assets/fonts/Manrope-SemiBold.ttf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Manrope';
+  src: url("./assets/fonts/Manrope-Bold.ttf");
+  font-weight: bold;
+}
+
+#root {
+  overflow-x: hidden;
+}
+
+* {
+  margin: 0;
+  font-family: 'Manrope', sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: $common-grey;
+}
+
+p {
+  color: $common-grey;
+}
+
+h2, h3 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: bold;
+  color: $common-black;
+
+  span {
+    font-size: inherit;
+    font-weight: inherit;
+    color: $base-color;
+  }
+}

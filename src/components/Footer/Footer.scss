@@ -1,0 +1,37 @@
+.footer {
+  margin: 16px;
+
+  .footer-content {
+
+    .info {
+      margin-bottom: 50px;
+      display: flex;
+      gap: 64px;
+
+      .info-item {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        h3 {
+          font-size: 16px;
+          font-weight: bold;
+          white-space: nowrap;
+        }
+
+        .info-links {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          a {
+            font-size: 14px;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,182 @@
+@use 'src/index';
+
+.welcome-section {
+  .welcome-section-content {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+
+
+    .content__left {
+      width: 55%;
+
+      h1 {
+        font-weight: bold;
+        font-size: 54px;
+
+        span {
+          font-size: inherit;
+          font-weight: inherit;
+          color: index.$base-color;
+        }
+      }
+
+      p {
+        margin: 32px 0;
+
+        span {
+          font-weight: 500;
+        }
+      }
+    }
+
+    .content__right {
+      position: relative;
+
+      img {
+        width: 654px;
+        height: 443px;
+        position: absolute;
+        left: -50px;
+        top: 0;
+      }
+    }
+  }
+}
+
+
+
+
+// SLIDER SECTION
+.slider-section {
+  height: 200px;
+  position: relative;
+  padding: 20px;
+  text-align: center;
+  background-color: #F4F4F4;
+
+  h2 {
+    margin-bottom: 50px;
+
+    span {
+      font-size: inherit;
+      font-weight: inherit;
+      color: index.$base-color;
+    }
+  }
+
+  .slider {
+    width: 100vw;
+    display: flex;
+    position: absolute;
+    left: 0;
+
+    .animated {
+      display: flex;
+      gap: 170px;
+      padding-right: 170px;
+      -webkit-animation: floatCities 15s linear infinite;
+      -o-animation: floatCities 15s linear infinite;
+      animation: floatCities 15s linear infinite;
+
+      span {
+        font-size: 32px;
+        white-space: nowrap;
+        color: index.$common-grey;
+      }
+    }
+  }
+}
+
+@keyframes floatCities {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+
+
+
+// ADVANTAGES SECTION
+.advantages-section {
+  min-height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  .advantages-content {
+    h2 {
+      margin-bottom: 60px;
+
+      span {
+        font-size: inherit;
+        font-weight: inherit;
+        color: index.$base-color;
+      }
+    }
+
+    .advantages {
+      display: flex;
+      gap: 100px;
+
+      h3 {
+        font-size: 20px;
+
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+
+
+
+
+// QUESTIONS SECTION
+.questions-section {
+  min-height: 80vh;
+  .questions-content {
+    display: flex;
+    justify-content: space-between;
+
+    form {
+      max-width: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      textarea {
+        min-height: 100px;
+        max-height: 500px;
+      }
+
+      button {
+        margin-top: 20px;
+      }
+    }
+
+    .questions-picture {
+      margin-right: 50px;
+      position: relative;
+
+      img {
+        width: 545px;
+        height: 407px;
+        position: absolute;
+        left: 50px;
+      }
+    }
+  }
+}
