@@ -2,6 +2,9 @@ import React from 'react';
 import './LandingPage.scss'
 import Button from "../../components/Button/Button";
 import {ReactComponent as Vector} from "../../assets/vector.svg";
+import {ReactComponent as BgShape1} from "../../assets/images/bg-shape1.svg";
+import {ReactComponent as BgShape2} from "../../assets/images/bg-shape2.svg";
+import {ReactComponent as BgShape3} from "../../assets/images/bg-shape3.svg";
 import FastIcon from "../../assets/icons/fast-icon.png";
 import PromiseIcon from "../../assets/icons/promise-icon.png";
 import TwentyFourSevenIcon from "../../assets/icons/247-icon.png";
@@ -13,6 +16,8 @@ const LandingPage = () => {
     return (
         <main>
             <section className='welcome-section'>
+                <BgShape1 className="bg-shape1"/>
+                <BgShape2 className="bg-shape2"/>
                 <div className="wrapper">
                     <div className="welcome-section-content">
                         <div className="content__left">
@@ -27,6 +32,7 @@ const LandingPage = () => {
                         </div>
                     </div>
                 </div>
+                <BgShape3 className="bg-shape3"/>
 
             </section>
 

@@ -45,7 +45,7 @@ const Footer = () => {
                             </div>
                         </div>
                     </div>
-                    <p style={{textAlign: "center"}}>Copyright 2023 • Все права защищены CityLink</p>
+                    <p className="copyright">Copyright 2023 • Все права защищены CityLink</p>
                 </div>
             </div>
         </footer>

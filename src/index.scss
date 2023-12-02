@@ -52,11 +52,20 @@ p {
 h2, h3 {
   font-size: 32px;
   font-weight: bold;
+
+  @media (max-width: 800px) {
+    font-size: 20px;
+  }
 }
 
 .wrapper {
-  max-width: 1200px;
+  max-width: 1250px;
+  padding: 0 50px;
   margin: 0 auto;
+
+  @media (max-width: 1080px) {
+    padding: 0 10px;
+  }
 }
 
 .logo {

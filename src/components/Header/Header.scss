@@ -2,7 +2,7 @@
 
 .header {
   width: 100%;
-  padding: 16px;
+  padding: 16px 0;
   z-index: 999;
 
   position: fixed;
@@ -16,18 +16,48 @@
     justify-content: space-between;
     align-items: center;
 
+    @media (max-width: 1080px) {
+      justify-content: center;
+    }
+
+    .menu-button {
+      display: none;
+      position: absolute;
+      left: 10px;
+      padding: 10px;
+      justify-content: center;
+      align-items: center;
+
+      @media (max-width: 1080px) {
+        display: flex;
+      }
+    }
+
     .nav {
+      margin: 0 20px;
       display: flex;
       gap: 40px;
+
+      @media (max-width: 1080px) {
+        display: none;
+      }
 
       .nav-link {
         text-decoration: none;
         color: index.$common-grey;
-
+        white-space: nowrap;
       }
 
       .nav-link:hover{
         color: index.$common-black;
+      }
+    }
+
+    .mini-profile {
+      display: flex;
+      gap: 10px;
+      @media (max-width: 1080px) {
+        display: none;
       }
     }
   }

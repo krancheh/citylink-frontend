@@ -1,13 +1,19 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import "./Header.scss";
+import Button from "../Button/Button";
+import {ReactComponent as SidebarIcon} from "../../assets/icons/sidebar-icon.svg";
 
+type TProps = {
+    handler: () => void;
+}
 
-const Header: React.FC = () => {
+const Header: React.FC<TProps> = ({handler}) => {
     return (
         <header className='header'>
             <div className="wrapper">
                 <div className="header-content">
+                    <Button className="menu-button" type="text" handler={handler}><SidebarIcon/></Button>
                     <Link className='logo' to="/">City<span>Link</span></Link>
 
                     <nav className="nav">
@@ -19,7 +25,8 @@ const Header: React.FC = () => {
                     </nav>
 
                     <div className="mini-profile">
-                        <p>Кирилл Махонин</p>
+                        <Button type="text" path="/login">Войти</Button>
+                        <Button type="main" path="/signup">Регистрация</Button>
                     </div>
                 </div>
             </div>

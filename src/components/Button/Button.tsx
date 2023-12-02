@@ -3,24 +3,24 @@ import {Link} from "react-router-dom";
 import './Button.scss'
 
 type TProps = {
+    className?: string;
     children?: React.ReactNode;
     readonly type?: "default" | "main" | "text";
-    text?: string;
     readonly path?: string;
     handler?: () => void;
     disabled?: boolean;
 }
 
-const Button: React.FC<TProps> = ({children, type = "default", text, handler, path}) => {
+const Button: React.FC<TProps> = ({className, children, type = "default", handler, path}) => {
 
     if (path) {
         return (
-            <Link className={`button ${type}`} to={path}>{children}</Link>
+            <Link className={`button ${type} ${className}`} to={path}>{children}</Link>
         )
     }
 
     return (
-        <button className={`button ${type}`} onClick={handler}>{children}</button>
+        <button className={`button ${type} ${className}`} onClick={handler}>{children}</button>
     )
 };
 
