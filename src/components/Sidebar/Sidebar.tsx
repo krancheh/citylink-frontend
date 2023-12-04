@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import './Sidebar.scss';
 import Button from "../Button/Button";
 import {ReactComponent as SidebarIcon} from "../../assets/icons/sidebar-icon.svg";
+import MiniProfile from "../MiniProfile/MiniProfile";
 
 type TProps = {
     isActive: boolean;
@@ -27,9 +28,7 @@ const Sidebar: React.FC<TProps> = ({isActive, handler}) => {
                     <Link className="nav-link" to='/'>Цены</Link>
                 </nav>
 
-                <div className="mini-profile">
-                    <p>Кирилл Махонин</p>
-                </div>
+                <MiniProfile/>
             </div>
 
             <div className="close-area" onClick={handler}/>

@@ -9,6 +9,10 @@
   border-radius: 8px;
   border: none;
   opacity: .9;
+
+  @media (max-width: 500px) {
+    font-size: 14px;
+  }
 }
 
 .button:hover {

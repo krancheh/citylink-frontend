@@ -24,7 +24,7 @@ const LandingPage = () => {
                             <h1>Ваш надежный маршрут к <span>комфортному путешествию</span></h1>
                             <p><span>CityLink</span> гарантирует опыт, комфорт и безопасность на каждом километре.
                                 Присоединяйтесь к путешествию первого класса по дорогам страны!</p>
-                            <Button type="main" path="/">Подобрать маршрут</Button>
+                            <Button type="main" path="/routes">Подобрать маршрут</Button>
                         </div>
                         <div className="content__right">
                             <Vector/>
@@ -105,9 +105,9 @@ const LandingPage = () => {
                         <form>
                             <h2>Остались вопросы?
                                 Напишите нам!</h2>
-                            <Input label="Имя"/>
-                            <Input type="email" label="Email"/>
-                            <Input type="textarea" label="Сообщение"/>
+                            <Input id="name" label="Имя"/>
+                            <Input id="email" type="email" label="Email"/>
+                            <Input id="message" type="textarea" label="Сообщение"/>
                             <Button type="main">Отправить</Button>
                         </form>
 

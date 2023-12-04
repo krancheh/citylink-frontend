@@ -2,9 +2,9 @@ import React from 'react';
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import LandingPage from "./pages/LandingPage/LandingPage";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import SignupPage from "./pages/SignupPage/SignupPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import AuthPage from "./pages/AuthPage/AuthPage";
+import RoutesPage from "./pages/RoutesPage/RoutesPage";
 
 
 function App() {
@@ -13,8 +13,9 @@ function App() {
             <Route path="/" element={<Layout/>}>
                 {/* Public routes */}
                 <Route index element={<LandingPage/>}/>
-                <Route path="login" element={<LoginPage/>}/>
-                <Route path="signup" element={<SignupPage/>}/>
+                <Route path="/login" element={<AuthPage/>}/>
+                <Route path="/signup" element={<AuthPage/>}/>
+                <Route path="/routes" element={<RoutesPage/>}/>
 
 
             </Route>

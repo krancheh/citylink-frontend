@@ -1,0 +1,120 @@
+@use 'src/index';
+
+
+.auth-page {
+  min-height: 100vh;
+  background-color: #F4F4F4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 800px) {
+    padding-top: 50px;
+  }
+  .auth-content {
+    display: flex;
+    min-height: 560px;
+    gap: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+
+    @media (max-width: 800px) {
+      width: 100%;
+
+      @media (max-width: 500px) {
+        min-height: 100vh;
+      }
+    }
+
+    .left-side {
+      position: relative;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      background: linear-gradient(45deg, #7eecc9, index.$base-color, #14966c, #44d7a7);
+      -webkit-animation: rotateGradient 5s linear infinite;
+      -o-animation: rotateGradient 5s linear infinite;
+      animation: rotateGradient 5s linear infinite;
+      border-bottom-left-radius: inherit;
+      border-top-left-radius: inherit;
+
+      @media (max-width: 800px) {
+        display: none;
+      }
+
+      h1 {
+        color: #fff;
+      }
+
+      img {
+        position: absolute;
+        height: 365px;
+        top: 20%;
+        left: 25%;
+      }
+    }
+
+    .auth-form {
+      width: 500px;
+      padding: 30px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 35px;
+
+      @media (max-width: 900px) {
+        width: 100%;
+        gap: 30px;
+        padding: 20px;
+
+        @media (max-width: 500px) {
+          padding: 20px 15px;
+        }
+      }
+
+      h1 {
+        color: index.$base-color;
+        margin-bottom: 25px;
+      }
+
+      .name-inputs {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+      }
+
+      .checkbox {
+        margin: -15px 0 5px;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+
+        align-self: flex-start;
+      }
+
+      .input {
+        width: 100%;
+      }
+    }
+  }
+
+}
+
+
+@keyframes rotateGradient {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  
+  50% {
+    filter: hue-rotate(10deg);
+  }
+
+  100% {
+    filter: hue-rotate(0deg);
+  }
+}

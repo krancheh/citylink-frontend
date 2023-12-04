@@ -246,15 +246,11 @@
       max-width: 350px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 28px;
 
       textarea {
         min-height: 100px;
         max-height: 500px;
-      }
-
-      button {
-        margin-top: 20px;
       }
     }
 
