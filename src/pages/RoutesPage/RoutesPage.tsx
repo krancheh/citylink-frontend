@@ -1,41 +1,57 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './RoutesPage.scss';
-import Input from "../../components/Input/Input";
-import Button from "../../components/Button/Button";
-import {ReactComponent as SwapIcon} from "../../assets/icons/swap-icon.svg";
+import SearchForm from "../../components/SearchForm/SearchForm";
+import {URLSearchParamsInit, useSearchParams} from "react-router-dom";
+
+interface SearchFormData {
+    target: {
+        departureCity: {
+            value: string;
+        };
+        destinationCity: {
+            value: string;
+        };
+        departureDate: {
+            value: string;
+        }
+    }
+    preventDefault: () => void;
+}
+
 
 const RoutesPage = () => {
+    const [searchParams, setSearchParams] = useSearchParams({});
+
+    const departureCity = searchParams.get("departureCity") || "";
+    const destinationCity = searchParams.get("destinationCity") || "";
+    const departureDate = searchParams.get("departureDate") || "";
+
+    useEffect(() => {
+        if (departureCity && destinationCity && departureDate) {
+            // запрос на поиск
+        }
+    }, []);
+
+    const handleSearch = (e: SearchFormData) => {
+        e.preventDefault();
+
+        const data: URLSearchParamsInit = {
+            departureCity: e.target.departureCity.value,
+            destinationCity: e.target.destinationCity.value,
+            departureDate: e.target.departureDate.value,
+        }
+
+        // запрос на поиск
+
+        setSearchParams(data);
+    }
+
     return (
         <div className="routes-page">
             <div className="wrapper">
-                <form className="search-panel">
-                    <h1>Поиск расписаний автобусов</h1>
-                    <p>Найти билеты легко и быстро на любой автобусный маршрут на территории юга России</p>
-                    <div className="search-inputs">
-                        <div className="city-inputs">
-                            <div className="city-input">
-                                <Input id="departureCity" label="Откуда"/>
-                                <p>Например: <Button type="text">Ставрополь</Button></p>
-                            </div>
-
-                            <Button type="text" className="swap-button"><SwapIcon/></Button>
-
-                            <div className="city-input">
-                                <Input id="destinationCity" label="Куда"/>
-                                <p>Например: <Button type="text">Краснодар</Button></p>
-                            </div>
-                        </div>
-
-                        <div className="date-inputs">
-                            <div className="date-input">
-                                <Input id="dateFrom" type="date" label="Дата"/>
-                                <p><Button type="text">Сегодня</Button>, <Button type="text">Завтра</Button></p>
-                            </div>
-
-                            <Button type="main">Найти</Button>
-                        </div>
-                    </div>
-                </form>
+                <div className="routes-page__inner">
+                    <SearchForm/>
+                </div>
             </div>
         </div>
     );
