@@ -11,7 +11,7 @@ export interface Ticket {
 }
 
 export interface User {
-    id: string;
+    id?: string;
     firstName: string;
     middleName?: string;
     lastName: string;
@@ -21,4 +21,10 @@ export interface User {
     gender?: boolean;
     birthDate?: number;
     favouriteCity?: string;
+}
+
+export interface ApiFromPath {
+    get: (path: string, ...args: any[]) => Promise;
+    post: (path: string, ...args: any[]) => Promise;
+    put: (path: string, ...args: any[]) => Promise;
 }
