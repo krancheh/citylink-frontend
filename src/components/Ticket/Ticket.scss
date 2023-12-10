@@ -1,0 +1,123 @@
+@use "./src/index";
+
+
+.ticket {
+  position: relative;
+
+  @media (max-width: 800px) {
+    display: block;
+    min-height: 165px;
+    background-color: #F4F4F4;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  td {
+    @media (max-width: 800px) {
+      position: absolute;
+      background-color: transparent !important;
+      border: none !important;
+    }
+  }
+
+  td::before {
+    content: "";
+
+    @media (max-width: 800px) {
+      display: block;
+      font-size: 10px;
+      color: index.$common-grey;
+    }
+  }
+
+  .td-departure, .td-destination {
+
+    h4 {
+      font-size: 20px;
+      font-weight: 500;
+
+      @media (max-width: 800px) {
+        font-size: 18px;
+      }
+    }
+    div {
+      color: index.$base-color;
+
+      @media (max-width: 800px) {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .td-departure {
+    top: 0;
+    left: 0;
+  }
+
+  .td-departure::before {
+    @media (max-width: 800px) {
+      content: "Отправление";
+    }
+  }
+
+  .td-destination {
+    bottom: 0;
+    left: 0;
+  }
+
+  .td-destination::before {
+    @media (max-width: 800px) {
+      content: "Прибытие";
+    }
+  }
+
+  .td-date::before {
+    @media (max-width: 800px) {
+      content: "Дата";
+    }
+  }
+
+  .td-date {
+    top: 0;
+    right: 0;
+
+    @media (max-width: 800px) {
+      text-align: right;
+    }
+  }
+
+  .td-duration {
+    top: 40px;
+    right: 0;
+
+    @media (max-width: 800px) {
+      text-align: right;
+    }
+  }
+
+  .td-duration::before {
+    @media (max-width: 800px) {
+      content: "Время в пути";
+    }
+  }
+
+  .td-price {
+    font-size: 18px;
+    width: 0;
+    white-space: nowrap;
+    bottom: 0;
+    right: 95px;
+
+    @media (max-width: 800px) {
+      width: auto;
+      font-weight: bold;
+    }
+  }
+
+  .td-button {
+    width: 0;
+    right: 85px;
+    bottom: 0;
+  }
+}

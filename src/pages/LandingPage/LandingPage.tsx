@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './LandingPage.scss'
 import Button from "../../components/Button/Button";
 import {ReactComponent as Vector} from "../../assets/vector.svg";
@@ -13,6 +13,10 @@ import landingPic2 from "../../assets/images/abobus2.png"
 import Input from "../../components/Input/Input";
 
 const LandingPage = () => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+
     return (
         <main>
             <section className='welcome-section'>
@@ -105,9 +109,9 @@ const LandingPage = () => {
                         <form>
                             <h2>Остались вопросы?
                                 Напишите нам!</h2>
-                            <Input id="name" label="Имя"/>
-                            <Input id="email" type="email" label="Email"/>
-                            <Input id="message" type="textarea" label="Сообщение"/>
+                            <Input id="name" value={name} setValue={setName} label="Имя"/>
+                            <Input id="email" value={email} setValue={setEmail} type="email" label="Email"/>
+                            <Input id="message" value={message} setValue={setMessage} type="textarea" label="Сообщение"/>
                             <Button type="main">Отправить</Button>
                         </form>
 

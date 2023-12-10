@@ -52,6 +52,18 @@
 
     .content__left {
       width: 55%;
+      animation: toRight 1.3s ease;
+
+      @keyframes toRight {
+        0% {
+          transform: translateX(-100vw);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(0%);
+          opacity: 1;
+        }
+      }
 
       @media (max-width: 1080px) {
         width: 100%;
@@ -102,6 +114,18 @@
 
     .content__right {
       position: relative;
+      animation: toLeft 1.5s ease;
+
+      @keyframes toLeft {
+        0% {
+          transform: translateX(100vw);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(0%);
+          opacity: 1;
+        }
+      }
 
       @media (max-width: 1080px) {
         display: none;

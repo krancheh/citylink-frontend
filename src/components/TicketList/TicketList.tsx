@@ -1,15 +1,16 @@
 import React from 'react';
 import './TicketList.scss';
 import Ticket from '../Ticket/Ticket';
+import {TicketType} from '../../types';
 
 interface TProps {
-    tickets: Ticket[];
+    tickets: TicketType[];
 }
 
 const TicketList: React.FC<TProps> = ({tickets}) => {
     return (
-        <div>
-            <table>
+        <div className="ticket-list">
+            <table className="ticket-table">
                 <thead>
                 <tr>
                     <th>Отправление</th>
@@ -22,7 +23,7 @@ const TicketList: React.FC<TProps> = ({tickets}) => {
                 <tbody>
                 {tickets.map(ticket => {
                     return (
-                        <Ticket ticket={ticket}></Ticket>
+                        <Ticket key={ticket.id} ticket={ticket}></Ticket>
                     )
                 })}
                 </tbody>

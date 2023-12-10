@@ -2,14 +2,30 @@
 
 .routes-page {
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
   @media (max-width: 800px) {
-    padding: 120px 0;
     background-color: #FBFBFB;
   }
 
+
+  .routes-page__inner {
+    transition: padding-top .2s ease;
+
+    .found-panel {
+      margin-top: 60px;
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h3 {
+        color: index.$common-grey;
+      }
+
+      .routes-count {
+        margin-top: 25px;
+      }
+    }
+  }
 
 }

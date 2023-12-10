@@ -1,11 +1,13 @@
-import React, { useState} from 'react';
+import React, {ChangeEventHandler, useState} from 'react';
 import "./Input.scss"
 
 type TProps = {
     id: string;
+    value: string;
+    setValue: (value: string) => void;
     type?: string;
     label?: string;
-    onChange?: (e: {target: {value: string}}) => void;
+    onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     onBlur?: (e: {target: {value: string}}) => void;
     formId?: string;
     errorMessage?: string;
@@ -28,6 +30,8 @@ const Input: React.FC<TProps> = (props) => {
         id,
         type = "text",
         label,
+        value,
+        setValue,
         formId,
         onChange,
         onBlur,
@@ -36,11 +40,10 @@ const Input: React.FC<TProps> = (props) => {
         placeholder,
         autocomplete,
     } = props;
-    const [inputText, setInputText] = useState("");
-    const [isActive, setIsActive] = useState(!!placeholder);
+    const [isActive, setIsActive] = useState(!!placeholder || !!value);
 
-    const inputHandler = (e: ElementType) => {
-        setInputText(e.target.value);
+    const inputHandler: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
+        setValue(e.target.value || "");
         if (e.target.value) {
             setIsActive(true);
         } else setIsActive(false);
@@ -59,22 +62,24 @@ const Input: React.FC<TProps> = (props) => {
                 ?
                 <textarea
                     id={id}
+                    name={id}
                     className={`input-element ${errorMessage ? "error" : ""}`}
                     form={formId}
                     onChange={inputHandler}
-                    value={inputText}
-                    required
+                    value={value}
+                    required={required}
                     placeholder={placeholder}
                 />
                 :
                 <input
                     id={id}
+                    name={id}
                     className={`input-element ${errorMessage ? "error" : ""}`}
                     type={type === "date" ? "text" : type}
                     form={formId}
                     onChange={inputHandler}
-                    value={inputText}
-                    required
+                    value={value}
+                    required={required}
                     placeholder={placeholder}
                     onFocus={type === "date" ? dateHandler : undefined}
                     onBlur={onBlur}

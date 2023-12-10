@@ -1,56 +1,104 @@
-import React, {useEffect} from 'react';
+import React, {FormEventHandler, useEffect, useRef, useState} from 'react';
 import './RoutesPage.scss';
 import SearchForm from "../../components/SearchForm/SearchForm";
 import {URLSearchParamsInit, useSearchParams} from "react-router-dom";
+import {TicketType} from "../../types";
+import TicketList from "../../components/TicketList/TicketList";
+import routeCount from "../../utils/routeCount";
 
-interface SearchFormData {
-    target: {
-        departureCity: {
-            value: string;
-        };
-        destinationCity: {
-            value: string;
-        };
-        departureDate: {
-            value: string;
-        }
-    }
-    preventDefault: () => void;
-}
 
 
 const RoutesPage = () => {
     const [searchParams, setSearchParams] = useSearchParams({});
 
-    const departureCity = searchParams.get("departureCity") || "";
-    const destinationCity = searchParams.get("destinationCity") || "";
-    const departureDate = searchParams.get("departureDate") || "";
+    const [departureCity, setDepartureCity] = useState(searchParams.get("departureCity") || "");
+    const [destinationCity, setDestinationCity] = useState(searchParams.get("destinationCity") || "");
+    const [departureDate, setDepartureDate] = useState(searchParams.get("departureDate") || "");
+
+    const [tickets, setTickets] = useState<TicketType[]>([
+        {id: 228, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 10, price: 1000},
+        {id: 213, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
+        {id: 5435, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
+        {id: 6547, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
+        {id: 982894, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
+    ])
+
+    const [searchPerformed, setSearchPerformed] = useState(false);
+    const [paddingTop, setPaddingTop] = useState("");
+
+    const searchFormRef = useRef<HTMLDivElement>(null);
+
 
     useEffect(() => {
         if (departureCity && destinationCity && departureDate) {
-            // запрос на поиск
+            setSearchPerformed(true);
         }
+
+        const handleResize = () => {
+            const searchForm = searchFormRef.current;
+            if (searchForm) {
+                const formHeight = searchForm.getBoundingClientRect().height;
+                setPaddingTop(`max(calc(50vh - ${formHeight / 2}px), 100px)`)
+            }
+        }
+        handleResize();
+
+        window.addEventListener('resize', () => {
+            handleResize()
+        });
+
+        return window.removeEventListener('resize', () => {
+            handleResize();
+        });
     }, []);
 
-    const handleSearch = (e: SearchFormData) => {
+    const handleSearch: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
-        const data: URLSearchParamsInit = {
-            departureCity: e.target.departureCity.value,
-            destinationCity: e.target.destinationCity.value,
-            departureDate: e.target.departureDate.value,
+        const formData = new FormData(e.currentTarget);
+
+        const searchParams: URLSearchParamsInit = {
+            departureCity: formData.get("departureCity") as string,
+            destinationCity: formData.get("destinationCity") as string,
+            departureDate: formData.get("departureDate") as string,
+        };
+
+        setSearchParams(searchParams);
+
+        const data = {
+            departureCity: searchParams.departureCity.toString().toLowerCase(),
+            destinationCity: searchParams.destinationCity.toString().toLowerCase(),
+            departureDate: new Date(formData.get("departureDate") as string).getTime(),
         }
 
+        setSearchPerformed(true);
         // запрос на поиск
-
-        setSearchParams(data);
     }
 
     return (
         <div className="routes-page">
             <div className="wrapper">
-                <div className="routes-page__inner">
-                    <SearchForm/>
+                <div className="routes-page__inner" style={{paddingTop: `${searchPerformed ? "100px" : paddingTop}`}}>
+                    <SearchForm
+                        searchFormRef={searchFormRef}
+                        searchPerformed={searchPerformed}
+                        departureCityState={{departureCity, setDepartureCity}}
+                        destinationCityState={{destinationCity, setDestinationCity}}
+                        departureDateState={{departureDate, setDepartureDate}}
+                        handleSearch={handleSearch}
+                    />
+                    {
+                        searchPerformed
+                        ?
+                            <div className="found-panel">
+                                <h3>Расписание автобусов</h3>
+                                <h1>{`${departureCity} — ${destinationCity}`}</h1>
+                                <h3 className="routes-count">{tickets.length ? `Найдено: ${tickets.length} ${routeCount(tickets.length)}` : "Рейсы на эту дату не найдены"}</h3>
+                                <TicketList tickets={tickets}/>
+                            </div>
+                        :
+                            ""
+                    }
                 </div>
             </div>
         </div>

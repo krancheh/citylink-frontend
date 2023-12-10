@@ -1,6 +1,6 @@
 
 
-export interface Ticket {
+export interface TicketType {
     id: number | string;
     departureCity: string;
     destinationCity: string;

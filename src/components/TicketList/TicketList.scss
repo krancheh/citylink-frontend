@@ -1,0 +1,48 @@
+@use './src/index';
+$border-color: #e5e5e5;
+
+
+.ticket-list {
+  width: 100%;
+  .ticket-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px 20px;
+
+    thead {
+      text-align: left;
+      
+      @media (max-width: 800px) {
+        display: none;
+      }
+
+      th {
+        padding: 0 20px;
+        font-weight: bold;
+      }
+    }
+
+    td {
+      padding: 20px;
+    }
+
+    td {
+      background-color: #F4F4F4;
+      border: 1px solid transparent;
+      border-bottom-color: $border-color;
+      border-top-color: $border-color;
+    }
+
+    td:first-child {
+      border-bottom-left-radius: 10px;
+      border-top-left-radius: 10px;
+      border-left-color: $border-color;
+    }
+
+    td:last-child {
+      border-bottom-right-radius: 10px;
+      border-top-right-radius: 10px;
+      border-right-color: $border-color;
+    }
+  }
+}

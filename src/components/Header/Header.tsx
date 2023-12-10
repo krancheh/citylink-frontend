@@ -14,7 +14,7 @@ const Header: React.FC<TProps> = ({handler}) => {
         <header className='header'>
             <div className="wrapper">
                 <div className="header-content">
-                    <Button className="menu-button" type="text" handler={handler}><SidebarIcon/></Button>
+                    <Button className="menu-button" type="text" onClick={handler}><SidebarIcon/></Button>
                     <Link className='logo' to="/">City<span>Link</span></Link>
 
                     <nav className="nav">
