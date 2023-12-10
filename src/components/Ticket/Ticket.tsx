@@ -10,8 +10,9 @@ interface TProps {
 const Ticket: React.FC<TProps> = ({ticket}) => {
     const date = new Date(ticket.departureDate);
     const departureTime = `${date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
-    const arrivalTime = `${date.getHours() + ticket.duration}:${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
-    const departureDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+    date.setHours(date.getHours() + ticket.duration);
+    const arrivalTime = `${date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
+    const departureDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
 
     return (
         <tr className="ticket">

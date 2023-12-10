@@ -4,7 +4,7 @@ import {createApiFromPath} from "../api";
 interface RouteData {
     departureCity: string;
     destinationCity: string;
-    departureDate: number;
+    departureDate: string;
 }
 
 export default class TicketService {
@@ -17,9 +17,9 @@ export default class TicketService {
         return this.ticketsApi.get("/getTickets");
     }
     static async getRoutes(route: RouteData) {
-        return this.routesApi.post("/getRoutes", route);
+        return this.routesApi.get("/getRoutes", {params: route});
     }
     static async getSimilarCities(cityName: string) {
-        return this.routesApi.post("/getCities", {cityName})
+        return this.routesApi.get("/getCities", {cityName})
     }
 }

@@ -53,13 +53,13 @@
       }
     }
 
-    .mini-profile {
-      display: flex;
-      gap: 10px;
-      @media (max-width: 1080px) {
-        display: none;
-      }
-    }
+
   }
+
+  .header-content .mini-profile {
+     @media (max-width: 1080px) {
+       display: none;
+     }
+   }
 }
 

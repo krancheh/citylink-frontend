@@ -5,6 +5,7 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import RoutesPage from "./pages/RoutesPage/RoutesPage";
+import RequireAuth from "./components/RequireAuth";
 
 
 function App() {
@@ -17,7 +18,10 @@ function App() {
                 <Route path="/signup" element={<AuthPage/>}/>
                 <Route path="/routes" element={<RoutesPage/>}/>
 
-
+                <Route element={<RequireAuth/>}>
+                    <Route path="/profile"/>
+                    <Route path="/tickets"/>
+                </Route>
             </Route>
         </Route>
     ))

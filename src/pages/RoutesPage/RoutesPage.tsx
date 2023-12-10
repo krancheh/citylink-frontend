@@ -5,6 +5,7 @@ import {URLSearchParamsInit, useSearchParams} from "react-router-dom";
 import {TicketType} from "../../types";
 import TicketList from "../../components/TicketList/TicketList";
 import routeCount from "../../utils/routeCount";
+import TicketService from "../../services/TicketService";
 
 
 
@@ -16,11 +17,11 @@ const RoutesPage = () => {
     const [departureDate, setDepartureDate] = useState(searchParams.get("departureDate") || "");
 
     const [tickets, setTickets] = useState<TicketType[]>([
-        {id: 228, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 10, price: 1000},
-        {id: 213, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
-        {id: 5435, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
-        {id: 6547, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
-        {id: 982894, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
+        // {id: 228, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 10, price: 1000},
+        // {id: 213, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
+        // {id: 5435, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
+        // {id: 6547, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
+        // {id: 982894, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
     ])
 
     const [searchPerformed, setSearchPerformed] = useState(false);
@@ -31,6 +32,19 @@ const RoutesPage = () => {
 
     useEffect(() => {
         if (departureCity && destinationCity && departureDate) {
+
+            const data = {
+                departureCity,
+                destinationCity,
+                departureDate: new Date(departureDate).getTime().toString()
+            }
+
+            TicketService.getRoutes(data)
+                .then(result => {
+                    setTickets(result.data.routes)
+                })
+                .catch(e => console.log(e.message))
+
             setSearchPerformed(true);
         }
 
@@ -52,6 +66,8 @@ const RoutesPage = () => {
         });
     }, []);
 
+
+
     const handleSearch: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
 
@@ -68,11 +84,16 @@ const RoutesPage = () => {
         const data = {
             departureCity: searchParams.departureCity.toString().toLowerCase(),
             destinationCity: searchParams.destinationCity.toString().toLowerCase(),
-            departureDate: new Date(formData.get("departureDate") as string).getTime(),
+            departureDate: new Date(formData.get("departureDate") as string).getTime().toString(),
         }
 
+        TicketService.getRoutes(data)
+            .then(result => {
+                setTickets(result.data.routes)
+            })
+            .catch(e => console.log(e.message))
+
         setSearchPerformed(true);
-        // запрос на поиск
     }
 
     return (
