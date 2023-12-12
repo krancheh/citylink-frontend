@@ -31,7 +31,7 @@ const SignupForm: React.FC<TProps> = ({auth, error, isLoading}) => {
     return (
         <form className="auth-form" onSubmit={event => submitHandler(event)}>
             {isLoading ? <Loading/> : null}
-            <h1>Регистрация</h1>
+            <h2>Регистрация</h2>
             <div className="name-inputs">
                 <Input id="firstName" value={firstName} setValue={setFirstName} autocomplete="given-name" required label="Имя" placeholder="Вася"/>
                 <Input id="lastName" value={lastName} setValue={setLastName} autocomplete="family-name" required label="Фамилия" placeholder="Пупкин"/>

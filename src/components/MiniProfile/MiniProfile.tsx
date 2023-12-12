@@ -13,7 +13,7 @@ const MiniProfile: React.FC = () => {
 
     return (
         <div className="mini-profile">
-            {!isLoading
+            {isLoading
                 ? name
                     ? <>
                         <span>{name}</span>

@@ -46,7 +46,7 @@ const AuthPage = () => {
         <div className="auth-page">
             <div className="auth-content">
                 <div className="left-side">
-                    <h1>Добро пожаловать!</h1>
+                    <h2>Добро пожаловать!</h2>
                     <BgShape4/>
                     <img src={welcomeImage} alt="Hi"/>
                 </div>

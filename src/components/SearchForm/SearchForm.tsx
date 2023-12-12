@@ -45,22 +45,40 @@ const SearchForm: React.FC<TProps> = ({
             <div className="search-inputs">
                 <div className="city-inputs">
                     <div className="city-input">
-                        <Input id="departureCity" value={departureCityState.departureCity} setValue={departureCityState.setDepartureCity} label="Откуда" required/>
-                        <p>Например: <Button type="text">Ставрополь</Button></p>
+                        <Input
+                            id="departureCity"
+                            value={departureCityState.departureCity}
+                            setValue={departureCityState.setDepartureCity}
+                            label="Откуда"
+                            required
+                        />
+                        <p>Например: <Button type="text" onClick={() => departureCityState.setDepartureCity("Ставрополь")}>Ставрополь</Button></p>
                     </div>
 
                     <Button type="text" className="swap-button" onClick={swapHandler}><SwapIcon/></Button>
 
                     <div className="city-input">
-                        <Input id="destinationCity" value={destinationCityState.destinationCity} setValue={destinationCityState.setDestinationCity} label="Куда" required/>
-                        <p>Например: <Button type="text">Краснодар</Button></p>
+                        <Input
+                            id="destinationCity"
+                            value={destinationCityState.destinationCity}
+                            setValue={destinationCityState.setDestinationCity}
+                            label="Куда"
+                            required
+                        />
+                        <p>Например: <Button type="text" onClick={() => destinationCityState.setDestinationCity("Краснодар")}>Краснодар</Button></p>
                     </div>
                 </div>
 
                 <div className="date-inputs">
                     <div className="date-input">
                         <Input id="departureDate" value={departureDateState.departureDate} setValue={departureDateState.setDepartureDate} type="date" label="Дата" required/>
-                        <p><Button type="text">Сегодня</Button>, <Button type="text">Завтра</Button></p>
+                        <p><Button type="text" onClick={() => {
+                            const date = new Date();
+                            departureDateState.setDepartureDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+                        }}>Сегодня</Button>, <Button type="text" onClick={() => {
+                            const date = new Date();
+                            departureDateState.setDepartureDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 1}`)
+                        }}>Завтра</Button></p>
                     </div>
 
                     <Button type="main" submit>Найти</Button>

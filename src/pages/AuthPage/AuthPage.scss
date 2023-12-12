@@ -14,7 +14,7 @@
   .auth-content {
     //position: relative;
     display: flex;
-    min-height: 560px;
+    min-height: 530px;
     gap: 20px;
     background-color: #fff;
     border-radius: 15px;
@@ -57,14 +57,14 @@
         }
       }
 
-      h1 {
+      h2 {
         color: #fff;
         animation: toRight .4s ease;
       }
 
       img {
         position: absolute;
-        height: 365px;
+        height: 345px;
         top: 20%;
         left: 25%;
         animation: toRight .4s ease;
@@ -103,9 +103,9 @@
         }
       }
 
-      h1 {
+      h2 {
         color: index.$base-color;
-        margin-bottom: 25px;
+        margin-bottom: 15px;
         animation: toLeft .4s ease;
       }
 

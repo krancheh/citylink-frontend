@@ -28,7 +28,7 @@ const LoginForm: React.FC<TProps> = ({auth, error, isLoading}) => {
     return (
         <form className="auth-form" onSubmit={submitHandler}>
             {isLoading ? <Loading/> : null}
-            <h1>Авторизация</h1>
+            <h2>Авторизация</h2>
             <Input id="phoneNumber" value={phoneNumber} setValue={setPhoneNumber} type="tel" autocomplete="tel" label="Номер телефона" required placeholder="+79238273782"/>
             <Input id="password" value={password} setValue={setPassword} type="password" autocomplete="current-password" label="Пароль" required placeholder="•••••••"/>
             <div className="checkbox">

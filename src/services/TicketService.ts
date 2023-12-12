@@ -19,7 +19,7 @@ export default class TicketService {
     static async getRoutes(route: RouteData) {
         return this.routesApi.get("/getRoutes", {params: route});
     }
-    static async getSimilarCities(cityName: string) {
-        return this.routesApi.get("/getCities", {cityName})
+    static async getCities(cityName: string) {
+        return this.routesApi.get("/getCities", {params: {cityName: cityName}})
     }
 }

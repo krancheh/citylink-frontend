@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, useState} from 'react';
+import React, {ChangeEventHandler, useEffect, useState} from 'react';
 import "./Input.scss"
 
 type TProps = {
@@ -43,12 +43,15 @@ const Input: React.FC<TProps> = (props) => {
     const [isActive, setIsActive] = useState(!!placeholder || !!value);
 
     const inputHandler: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = (e) => {
-        setValue(e.target.value || "");
-        if (e.target.value) {
-            setIsActive(true);
-        } else !placeholder && setIsActive(false);
+        setValue(e.target.value);
         onChange && onChange(e);
     }
+
+    useEffect(() => {
+        if (value) {
+            setIsActive(true);
+        } else !placeholder && setIsActive(false);
+    }, [value])
 
     const dateHandler = (e: ElementType) => {
         e.target.type = type;

@@ -26,7 +26,6 @@ const RoutesPage = () => {
 
     useEffect(() => {
         if (departureCity && destinationCity && departureDate) {
-
             const data = {
                 departureCity,
                 destinationCity,

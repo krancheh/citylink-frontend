@@ -17,12 +17,12 @@ function App() {
 
 
                 <Route index element={<LandingPage/>}/>
+                <Route path="/login" element={<AuthPage/>}/>
+                <Route path="/signup" element={<AuthPage/>}/>
                 <Route path="/routes" element={<RoutesPage/>}/>
                 <Route path="/profile" element={<ProfilePage/>}/>
                 <Route path="/tickets"/>
             </Route>
-            <Route path="/login" element={<AuthPage/>}/>
-            <Route path="/signup" element={<AuthPage/>}/>
         </Route>
     ))
 
