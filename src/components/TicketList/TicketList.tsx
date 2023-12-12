@@ -23,17 +23,16 @@ const TicketList: React.FC<TProps> = ({tickets}) => {
                         </tr>
                         </thead>
                         <tbody>
-                        {tickets.map(ticket => {
-                            return (
-                                <Ticket key={ticket.id} ticket={ticket}></Ticket>
-                            )
-                        })}
+                        {
+                            tickets.map(ticket => {
+                                return <Ticket key={ticket.id} ticket={ticket}></Ticket>
+                            })
+                        }
                         </tbody>
                     </>
-                    : ""
+                    : null
                 }
             </table>
-
         </div>
     );
 };

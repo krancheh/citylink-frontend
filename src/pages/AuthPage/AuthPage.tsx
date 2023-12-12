@@ -1,31 +1,46 @@
 import React, {useState} from 'react';
-import {Link, useLocation} from "react-router-dom";
-import Input from "../../components/Input/Input";
+import {Navigate, useLocation} from "react-router-dom";
 import './AuthPage.scss';
-import Button from "../../components/Button/Button";
 import {ReactComponent as BgShape4} from "../../assets/images/bg-shape4.svg";
 import welcomeImage from "../../assets/images/welcome.png"
 import LoginForm from "../../components/LoginForm/LoginForm";
 import SignupForm from "../../components/SignupForm/SignupForm";
+import AuthService, {UserData} from "../../services/AuthService";
+import {useAppDispatch} from "../../store";
+import {setUser} from "../../store/userSlice";
 
-type InputValueType = {
-    target: {
-        value: string;
-        valueAsNumber?: number;
-    }
+interface AuthFC {
+    [key: string]: typeof AuthService.login;
 }
 
 const AuthPage = () => {
     const {pathname} = useLocation();
-    const [nameError, setNameError] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(!!localStorage.getItem("token"))
 
-    const firstnameInputHandler = (e: InputValueType) => {
-        const name = e.target.value;
+    const dispatch = useAppDispatch();
 
-        if (name.length < 3) setNameError("Введите имя")
-        else setNameError("")
+    const auth: AuthFC = {
+        "/login": (data) => AuthService.login(data),
+        "/signup":  (data) => AuthService.signup(data)
     }
 
+    const makeRequest = async (data: UserData) => {
+        setIsLoading(true);
+        auth[pathname](data)
+            .then((result) => {
+                const { token } = result.data;
+                localStorage.setItem("token", token);
+                setIsSuccess(true);
+            })
+            .catch(error => {
+                setErrorMessage(error.response.data.message);
+            })
+            .finally(() => setIsLoading(false));
+    }
+
+    if (isSuccess) return <Navigate to={'/'}/>
 
     return (
         <div className="auth-page">
@@ -35,12 +50,10 @@ const AuthPage = () => {
                     <BgShape4/>
                     <img src={welcomeImage} alt="Hi"/>
                 </div>
-                <form className="auth-form">
-                    {pathname === "/login"
-                        ? <LoginForm/>
-                        : <SignupForm/>
-                    }
-                </form>
+                {pathname === "/login"
+                    ? <LoginForm auth={makeRequest} error={errorMessage} isLoading={isLoading}/>
+                    : <SignupForm auth={makeRequest} error={errorMessage} isLoading={isLoading}/>
+                }
             </div>
         </div>
     )

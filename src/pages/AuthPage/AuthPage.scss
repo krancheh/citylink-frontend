@@ -12,6 +12,7 @@
     padding-top: 0;
   }
   .auth-content {
+    //position: relative;
     display: flex;
     min-height: 560px;
     gap: 20px;
@@ -71,6 +72,7 @@
     }
 
     .auth-form {
+      position: relative;
       width: 500px;
       padding: 30px;
 
@@ -124,6 +126,43 @@
 
       .input {
         width: 100%;
+      }
+
+      .form-error-message {
+        padding: 7px;
+        margin: -20px 0;
+
+        color: #ff7a7a;
+        border-radius: 5px;
+        border: 1px solid #ff7a7a;
+        background-color: #ffeeee;
+
+        text-align: center;
+
+        -webkit-animation: onError .5s ease;
+        -o-animation: onError .5s ease;
+        animation: onError .3s ease;
+
+        @keyframes onError {
+          0% {
+            transform: translateX(0);
+          }
+          20% {
+            transform: translateX(-5px);
+          }
+          40% {
+            transform: translateX(5px);
+          }
+          60% {
+            transform: translateX(-5px);
+          }
+          80% {
+            transform: translateX(5px);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
       }
     }
   }

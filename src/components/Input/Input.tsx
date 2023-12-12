@@ -46,7 +46,7 @@ const Input: React.FC<TProps> = (props) => {
         setValue(e.target.value || "");
         if (e.target.value) {
             setIsActive(true);
-        } else setIsActive(false);
+        } else !placeholder && setIsActive(false);
         onChange && onChange(e);
     }
 

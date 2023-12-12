@@ -4,6 +4,7 @@ import './Layout.scss'
 import {Outlet} from "react-router-dom";
 import Footer from "../Footer/Footer";
 import Sidebar from "../Sidebar/Sidebar";
+import RequireAuth from "../../utils/RequireAuth";
 
 
 const Layout: React.FC = () => {
@@ -15,6 +16,7 @@ const Layout: React.FC = () => {
 
     return (
         <div className="layout">
+            <RequireAuth/>
             <Navbar handler={sidebarHandler}/>
             <Sidebar isActive={isActive} handler={sidebarHandler}/>
 

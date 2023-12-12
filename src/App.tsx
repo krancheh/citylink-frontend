@@ -5,7 +5,8 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import RoutesPage from "./pages/RoutesPage/RoutesPage";
-import RequireAuth from "./components/RequireAuth";
+import RequireAuth from "./utils/RequireAuth";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 
 function App() {
@@ -13,16 +14,15 @@ function App() {
         <Route errorElement={<ErrorPage/>}>
             <Route path="/" element={<Layout/>}>
                 {/* Public routes */}
-                <Route index element={<LandingPage/>}/>
-                <Route path="/login" element={<AuthPage/>}/>
-                <Route path="/signup" element={<AuthPage/>}/>
-                <Route path="/routes" element={<RoutesPage/>}/>
 
-                <Route element={<RequireAuth/>}>
-                    <Route path="/profile"/>
-                    <Route path="/tickets"/>
-                </Route>
+
+                <Route index element={<LandingPage/>}/>
+                <Route path="/routes" element={<RoutesPage/>}/>
+                <Route path="/profile" element={<ProfilePage/>}/>
+                <Route path="/tickets"/>
             </Route>
+            <Route path="/login" element={<AuthPage/>}/>
+            <Route path="/signup" element={<AuthPage/>}/>
         </Route>
     ))
 

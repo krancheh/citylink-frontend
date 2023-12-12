@@ -16,13 +16,7 @@ const RoutesPage = () => {
     const [destinationCity, setDestinationCity] = useState(searchParams.get("destinationCity") || "");
     const [departureDate, setDepartureDate] = useState(searchParams.get("departureDate") || "");
 
-    const [tickets, setTickets] = useState<TicketType[]>([
-        // {id: 228, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 10, price: 1000},
-        // {id: 213, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
-        // {id: 5435, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
-        // {id: 6547, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
-        // {id: 982894, departureCity: "Ставрополь", destinationCity: "Пятигорск", departureDate: 1702166400000, duration: 6, price: 1000},
-    ])
+    const [tickets, setTickets] = useState<TicketType[]>([]);
 
     const [searchPerformed, setSearchPerformed] = useState(false);
     const [paddingTop, setPaddingTop] = useState("");
@@ -113,12 +107,12 @@ const RoutesPage = () => {
                         ?
                             <div className="found-panel">
                                 <h3>Расписание автобусов</h3>
-                                <h1>{`${departureCity} — ${destinationCity}`}</h1>
+                                <h1>{`${searchParams.get("departureCity")} — ${searchParams.get("destinationCity")}`}</h1>
                                 <h3 className="routes-count">{tickets.length ? `Найдено: ${tickets.length} ${routeCount(tickets.length)}` : "Рейсы на эту дату не найдены"}</h3>
                                 <TicketList tickets={tickets}/>
                             </div>
                         :
-                            ""
+                            null
                     }
                 </div>
             </div>

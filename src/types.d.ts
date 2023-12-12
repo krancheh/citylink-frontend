@@ -12,10 +12,10 @@ export interface TicketType {
 
 export interface User {
     id?: string;
-    firstName: string;
+    firstName?: string;
     middleName?: string;
-    lastName: string;
-    phoneNumber: number;
+    lastName?: string;
+    phoneNumber: string | number;
     ticketsAmount?: number;
     email?: string;
     gender?: boolean;

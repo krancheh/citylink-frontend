@@ -1,22 +1,17 @@
-import {createSelector, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "./index";
-
-type User = {
-    id: string;
-    name: string;
-}
 
 
 const slice = createSlice({
     name: "user",
     initialState: {
-        user: {id: "21313", name: "Кирилл"} as User,
-        isLoading: false,
+        name: "",
+        isLoading: true,
 
     },
     reducers: {
-        setUser: (state, action: PayloadAction<User>) => {
-            state.user = action.payload;
+        setUser: (state, action: PayloadAction<string>) => {
+            state.name = action.payload;
         },
         setIsLoading: (state, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
@@ -25,7 +20,11 @@ const slice = createSlice({
 })
 
 export const selectUser = (state: RootState) => {
-    return state.user.user;
+    return state.user.name;
+}
+
+export const selectIsLoading = (state: RootState) => {
+    return state.user.isLoading;
 }
 
 export const {
