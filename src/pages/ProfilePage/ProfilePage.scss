@@ -1,0 +1,113 @@
+@use "../../index";
+
+
+.profile-page {
+  min-height: 100vh;
+  padding-top: 100px;
+
+  .bg-shape {
+    position: absolute;
+    opacity: .8;
+  }
+
+  .bg-shape:nth-child(1) {
+    top: 0;
+    left: 0;
+    border-top-left-radius: 25px;
+  }
+
+  .bg-shape:nth-child(2) {
+    bottom: 0;
+    left: 0;
+    border-bottom-left-radius: 25px;
+
+  }
+
+  .bg-shape:nth-child(3) {
+    bottom: 0;
+    right: 0;
+    border-bottom-right-radius: 25px;
+  }
+
+  .profile-card {
+    position: relative;
+    padding: 25px;
+
+    border-radius: 25px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+
+    background-color: #F9F9F9;
+
+    .profile-card__inner {
+      position: relative;
+      margin: 0 auto;
+      width: 100%;
+
+
+      h3 {
+        font-size: 16px;
+        font-weight: 500;
+        color: index.$common-grey;
+      }
+
+      .main-info {
+        margin-top: 45px;
+        display: flex;
+        gap: 10px;
+
+        div {
+          h1, span, button {
+            display: block;
+          }
+
+          .phone-number {
+            color: index.$base-color;
+          }
+
+          button {
+            padding: 0;
+            color: #ff7a7a;
+          }
+        }
+
+      }
+
+      .edit-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      .info {
+        margin: 50px 0 125px 0;
+        display: flex;
+        gap: 100px;
+        flex-wrap: wrap;
+
+        .info-item {
+          min-width: 210px;
+          display: flex;
+          flex-direction: column;
+
+          h4 {
+            font-size: 18px;
+            font-weight: 500;
+          }
+
+          span {
+            font-size: 27px;
+            margin-bottom: 10px;
+            color: index.$base-color;
+          }
+
+          .visited-span {
+            font-size: 12px;
+            margin-top: -10px;
+            color: index.$common-grey;
+          }
+        }
+      }
+
+    }
+  }
+}
