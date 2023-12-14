@@ -22,7 +22,7 @@ const SignupForm: React.FC<TProps> = ({auth, error, isLoading}) => {
     const submitHandler:FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
         const data: UserData = {
-            firstName, lastName, phoneNumber: +phoneNumber, password
+            firstName, lastName, phoneNumber: phoneNumber, password
         }
         auth(data);
         console.log(data)

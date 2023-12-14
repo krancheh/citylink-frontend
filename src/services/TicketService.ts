@@ -10,7 +10,7 @@ interface RouteData {
 export default class TicketService {
     private static ticketsApi: ApiFromPath = createApiFromPath("/tickets");
     private static routesApi: ApiFromPath = createApiFromPath("/routes");
-    static async addTicket(id: number) {
+    static async addTicket(id: string) {
         return this.ticketsApi.post("/addTicket", {id});
     }
     static async getTickets() {

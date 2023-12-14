@@ -108,7 +108,7 @@ const RoutesPage = () => {
                                 <h3>Расписание автобусов</h3>
                                 <h1>{`${searchParams.get("departureCity")} — ${searchParams.get("destinationCity")}`}</h1>
                                 <h3 className="routes-count">{tickets.length ? `Найдено: ${tickets.length} ${routeCount(tickets.length)}` : "Рейсы на эту дату не найдены"}</h3>
-                                <TicketList tickets={tickets}/>
+                                <TicketList tickets={tickets} type="routes"/>
                             </div>
                         :
                             null

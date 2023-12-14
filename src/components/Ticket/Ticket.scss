@@ -1,6 +1,37 @@
 @use "./src/index";
 
 
+
+
+.ticket-type {
+
+  @media (max-width: 800px) {
+    min-height: 198px !important;
+  }
+
+  .td-departure {
+    top: 10px !important;
+  }
+
+  .td-price {
+    right: 0 !important;
+  }
+
+  .td-price::before {
+
+
+    @media (max-width: 800px) {
+      content: "Стоимость";
+      font-weight: normal;
+      text-align: right;
+    }
+  }
+
+  .td-button {
+    display: none;
+  }
+}
+
 .ticket {
   position: relative;
 
@@ -53,6 +84,24 @@
   .td-departure {
     top: 0;
     left: 0;
+    //position: relative;
+
+    @media (max-width: 800px) {
+    }
+
+    .td-id {
+      position: absolute;
+      top: 5px;
+      left: 20px;
+      color: index.$common-grey;
+      font-size: 14px;
+      white-space: nowrap;
+
+      @media (max-width: 800px) {
+        font-size: 12px;
+        opacity: .5;
+      }
+    }
   }
 
   .td-departure::before {
@@ -102,6 +151,29 @@
     }
   }
 
+  .td-seat {
+    font-size: 18px;
+
+    @media (max-width: 800px) {
+      font-size: 14px;
+      position: absolute;
+      right: 0;
+      top: 77px;
+      text-align: right;
+    }
+
+
+  }
+  .td-seat::before {
+    content: "";
+
+    @media (max-width: 800px) {
+      content: "Место";
+      top: 0;
+      left: 0;
+    }
+  }
+
   .td-price {
     font-size: 18px;
     width: 0;
@@ -114,6 +186,7 @@
       font-weight: bold;
     }
   }
+
 
   .td-button {
     width: 0;

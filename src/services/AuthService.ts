@@ -12,9 +12,15 @@ interface AuthData {
     }
 }
 
+interface GetUserData {
+    data: {
+        user: User;
+    }
+}
+
 export default class AuthService {
     private static userApi: ApiFromPath = createApiFromPath("/user");
-    static async getUser(): Promise<User> {
+    static async getUser(): Promise<GetUserData> {
         return this.userApi.get("/info");
     }
     static async login(user: UserData): Promise<AuthData> {

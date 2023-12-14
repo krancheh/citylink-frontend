@@ -11,6 +11,7 @@ const RequireAuth = () => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
+            dispatch(setIsLoading(true));
             AuthService.auth()
                 .then((result) => {
                     const { token, name } = result.data;

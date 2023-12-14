@@ -38,11 +38,18 @@
 
     background-color: #F9F9F9;
 
+    @media (max-width: 800px) {
+      padding: 15px;
+    }
+
     .profile-card__inner {
       position: relative;
       margin: 0 auto;
       width: 100%;
 
+      h1 {
+        font-size: 24px;
+      }
 
       h3 {
         font-size: 16px;
@@ -54,6 +61,18 @@
         margin-top: 45px;
         display: flex;
         gap: 10px;
+
+        @media (max-width: 800px) {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+
+          div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+        }
 
         div {
           h1, span, button {
@@ -76,6 +95,12 @@
         position: absolute;
         top: 0;
         right: 0;
+
+        @media (max-width: 800px) {
+          position: relative;
+          margin-top: 20px;
+          width: 100%;
+        }
       }
 
       .info {
@@ -83,6 +108,10 @@
         display: flex;
         gap: 100px;
         flex-wrap: wrap;
+
+        @media (max-width: 800px) {
+          gap: 45px;
+        }
 
         .info-item {
           min-width: 210px;
@@ -92,12 +121,20 @@
           h4 {
             font-size: 18px;
             font-weight: 500;
+
+            @media (max-width: 800px) {
+              font-size: 16px;
+            }
           }
 
           span {
             font-size: 27px;
             margin-bottom: 10px;
             color: index.$base-color;
+
+            @media (max-width: 800px) {
+              font-size: 20px;
+            }
           }
 
           .visited-span {

@@ -5,9 +5,10 @@ import {TicketType} from '../../types';
 
 interface TProps {
     tickets: TicketType[];
+    type: "tickets" | "routes";
 }
 
-const TicketList: React.FC<TProps> = ({tickets}) => {
+const TicketList: React.FC<TProps> = ({tickets, type}) => {
     return (
         <div className="ticket-list">
             <table className="ticket-table">
@@ -19,13 +20,17 @@ const TicketList: React.FC<TProps> = ({tickets}) => {
                             <th>Прибытие</th>
                             <th>Время в пути</th>
                             <th>Дата</th>
-                            <th>Цена</th>
+                            <th>Стоимость</th>
+                            {type === "tickets"
+                                ? <th>Место</th>
+                                : null
+                            }
                         </tr>
                         </thead>
                         <tbody>
                         {
                             tickets.map(ticket => {
-                                return <Ticket key={ticket.id} ticket={ticket}></Ticket>
+                                return <Ticket key={ticket.id} ticket={ticket} type={type}></Ticket>
                             })
                         }
                         </tbody>

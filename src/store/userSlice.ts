@@ -6,8 +6,8 @@ const slice = createSlice({
     name: "user",
     initialState: {
         name: "",
-        isLoading: true,
-
+        isLoading: false,
+        boughtSuccess: false,
     },
     reducers: {
         setUser: (state, action: PayloadAction<string>) => {
@@ -15,6 +15,9 @@ const slice = createSlice({
         },
         setIsLoading: (state, action: PayloadAction<boolean>) => {
             state.isLoading = action.payload;
+        },
+        setBoughtSuccess: (state, action: PayloadAction<boolean>) => {
+            state.boughtSuccess = action.payload;
         }
     },
 })
@@ -30,6 +33,7 @@ export const selectIsLoading = (state: RootState) => {
 export const {
     setUser,
     setIsLoading,
+    setBoughtSuccess
 } = slice.actions;
 
 export default slice.reducer;

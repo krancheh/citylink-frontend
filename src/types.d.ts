@@ -1,13 +1,13 @@
 
 
 export interface TicketType {
-    id: number | string;
+    id: string;
     departureCity: string;
     destinationCity: string;
     duration: number;
     price: number;
     departureDate: string | number;
-    seatNo?: string;
+    seatNo?: number;
 }
 
 export interface User {
@@ -15,12 +15,13 @@ export interface User {
     firstName?: string;
     middleName?: string;
     lastName?: string;
-    phoneNumber: string | number;
+    phoneNumber: string;
     ticketsAmount?: number;
     email?: string;
     gender?: boolean;
     birthDate?: number;
     favouriteCity?: string;
+    favouriteCityCount?: number;
 }
 
 export interface ApiFromPath {

@@ -7,6 +7,7 @@ import AuthPage from "./pages/AuthPage/AuthPage";
 import RoutesPage from "./pages/RoutesPage/RoutesPage";
 import RequireAuth from "./utils/RequireAuth";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import TicketsPage from "./pages/TicketsPage/TicketsPage";
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
                 <Route path="/signup" element={<AuthPage/>}/>
                 <Route path="/routes" element={<RoutesPage/>}/>
                 <Route path="/profile" element={<ProfilePage/>}/>
-                <Route path="/tickets"/>
+                <Route path="/tickets" element={<TicketsPage/>}/>
             </Route>
         </Route>
     ))
