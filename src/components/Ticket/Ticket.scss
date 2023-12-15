@@ -94,12 +94,15 @@
       top: 5px;
       left: 20px;
       color: index.$common-grey;
+      opacity: .5;
       font-size: 14px;
       white-space: nowrap;
 
       @media (max-width: 800px) {
         font-size: 12px;
-        opacity: .5;
+        max-width: 90px;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
       }
     }
   }

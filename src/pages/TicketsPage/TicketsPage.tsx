@@ -7,14 +7,16 @@ import {TicketType} from "../../types";
 import TicketList from "../../components/TicketList/TicketList";
 import {useNavigate} from "react-router-dom";
 import TicketService from "../../services/TicketService";
+import Loading from "../../components/Loading/Loading";
 
 const TicketsPage = () => {
 
-    const navigate = useNavigate();
+    const navigate= useNavigate();
     const [tickets, setTickets] = useState<TicketType[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (!localStorage.getItem("token")) navigate("/")
+        if (!localStorage.getItem("token")) navigate("/login")
 
         TicketService.getTickets()
             .then(result => {
@@ -22,6 +24,9 @@ const TicketsPage = () => {
             })
             .catch(e => {
                 console.log(e)
+            })
+            .finally(() => {
+                setIsLoading(false);
             })
     }, [])
 
@@ -46,9 +51,11 @@ const TicketsPage = () => {
                         </div>
 
                         {
-                            tickets.length
-                                ? <TicketList tickets={tickets} type="tickets"/>
-                                : <span>У вас нет билетов</span>
+                            isLoading
+                                ? <Loading/>
+                                : tickets.length
+                                    ? <TicketList tickets={tickets} type="tickets"/>
+                                    : <span>У вас нет билетов</span>
                         }
 
                     </div>

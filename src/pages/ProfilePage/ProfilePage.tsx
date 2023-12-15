@@ -22,21 +22,19 @@ const ProfilePage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!localStorage.getItem("token")) navigate("/")
-        if (name) {
-            setIsLoading(true);
-            AuthService.getUser()
-                .then(result => {
-                    console.log(result)
-                    setUserInfo(result.data.user);
-                    console.log(result.data)
-                })
-                .catch(e => {
-                    console.log(e);
-                    navigate("/");
-                })
-                .finally(() => setIsLoading(false))
-        }
+        if (!localStorage.getItem("token")) navigate("/login")
+        setIsLoading(true);
+        AuthService.getUser()
+            .then(result => {
+                setUserInfo(result.data.user);
+            })
+            .catch(e => {
+                console.log(e);
+                navigate("/login");
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }, [])
 
     return (
