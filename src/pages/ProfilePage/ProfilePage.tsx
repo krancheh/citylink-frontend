@@ -8,10 +8,9 @@ import bgShape3 from "../../assets/images/profile-shape3.svg";
 import {useAppDispatch, useAppSelector} from "../../store";
 import {selectUser, setUser} from "../../store/userSlice";
 import AuthService from "../../services/AuthService";
-import {Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import Loading from "../../components/Loading/Loading";
 import {User} from "../../types";
-import {log} from "util";
 
 const ProfilePage = () => {
 

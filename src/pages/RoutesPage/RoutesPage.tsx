@@ -6,6 +6,9 @@ import {TicketType} from "../../types";
 import TicketList from "../../components/TicketList/TicketList";
 import routeCount from "../../utils/routeCount";
 import TicketService from "../../services/TicketService";
+import Modal from "../../components/Modal/Modal";
+import Input from "../../components/Input/Input";
+import Button from "../../components/Button/Button";
 
 
 
@@ -16,6 +19,9 @@ const RoutesPage = () => {
     const [destinationCity, setDestinationCity] = useState(searchParams.get("destinationCity") || "");
     const [departureDate, setDepartureDate] = useState(searchParams.get("departureDate") || "");
 
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+
     const [tickets, setTickets] = useState<TicketType[]>([]);
 
     const [searchPerformed, setSearchPerformed] = useState(false);
@@ -23,6 +29,7 @@ const RoutesPage = () => {
 
     const searchFormRef = useRef<HTMLDivElement>(null);
 
+    const [isModalActive, setIsModalActive] = useState(true);
 
     useEffect(() => {
         if (departureCity && destinationCity && departureDate) {
@@ -115,6 +122,20 @@ const RoutesPage = () => {
                     }
                 </div>
             </div>
+            <Modal title="Покупка билета">
+                <form className="passport-info-form">
+                    <p>Для продолжения укажите личные данные</p>
+                    <Input id="firstName" value="" setValue={() => {}} label="Имя"/>
+                    <Input id="lastName" value="" setValue={() => {}} label="Фамилия"/>
+                    <p>Паспортные данные</p>
+                    <Input id="passSerial" value="" setValue={() => {}} label="Серия"/>
+                    <Input id="passNumber" value="" setValue={() => {}} label="Номер"/>
+                    <div className="modal-buttons">
+                        <Button type="main" submit>Принять</Button>
+                        <Button>Отмена</Button>
+                    </div>
+                </form>
+            </Modal>
         </div>
     );
 };

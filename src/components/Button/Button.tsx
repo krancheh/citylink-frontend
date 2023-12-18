@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {MouseEventHandler} from 'react';
 import {Link} from "react-router-dom";
 import './Button.scss'
 
