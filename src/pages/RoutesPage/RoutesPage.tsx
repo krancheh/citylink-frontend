@@ -40,6 +40,10 @@ const RoutesPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
+    const [timeToCLose, setTimeToClose] = useState(5);
+    const interval = useRef<NodeJS.Timer>();
+    const timer = useRef<NodeJS.Timer>();
+
     useEffect(() => {
         if (departureCity && destinationCity && departureDate) {
             const data = {
@@ -153,12 +157,17 @@ const RoutesPage = () => {
 
         setIsLoading(true);
         TicketService.addTicket(chosenTicket.id)
-            .then(({data}) => {
-                console.log(data);
-                setTimeout(() => {
+            .then(() => {
+                interval.current = setInterval(() => {
+                    setTimeToClose((prevState) => prevState - 1);
+                }, 1000)
+
+                timer.current = setTimeout(() => {
+                    interval && clearInterval(interval.current);
+                    setTimeToClose(5);
                     setIsBuyModalActive(false);
                     setIsSuccess(false);
-                }, 3000);
+                }, 5000);
             })
             .catch(e => {
                 console.log(e);
@@ -172,7 +181,11 @@ const RoutesPage = () => {
     const closeModalHandler = () => {
         setIsBuyModalActive(false);
         setIsDocModalActive(false);
+        setIsSuccess(false);
         setChosenTicket(null);
+        clearInterval(interval.current);
+        clearTimeout(timer.current);
+        setTimeToClose(5);
     }
 
     return (
@@ -236,6 +249,7 @@ const RoutesPage = () => {
                                         в личном кабинете
                                     </p>
                                     <Button type="main" path="/tickets">В личный кабинет</Button>
+                                    <p className="timer">Окно закроется через: {timeToCLose}</p>
                                 </div>
                                 : <form className="buy-ticket-form" onSubmit={buyTicket}>
                                     <p>Подтвердите покупку:</p>
