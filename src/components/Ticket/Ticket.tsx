@@ -2,28 +2,19 @@ import React from 'react';
 import {TicketType} from "../../types";
 import Button from "../Button/Button";
 import './Ticket.scss';
-import TicketService from "../../services/TicketService";
-import {log} from "util";
 
 interface TProps {
     ticket: TicketType;
     type: "tickets" | "routes";
+    handleBuyTicket?: (ticket: TicketType) => void;
 }
 
-const Ticket: React.FC<TProps> = ({ticket, type}) => {
+const Ticket: React.FC<TProps> = ({ticket, type, handleBuyTicket}) => {
     const date = new Date(ticket.departureDate);
     const departureTime = `${date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
     date.setHours(date.getHours() + ticket.duration);
     const arrivalTime = `${date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
     const departureDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
-
-    const buyHandler = async () => {
-        TicketService.addTicket(ticket.id)
-            .then(result => {
-                console.log(result)
-            })
-            .catch(e => console.log(e))
-    }
 
     return (
         <tr className={`ticket ${type === "tickets" ? 'ticket-type' : ""}`}>
@@ -50,7 +41,20 @@ const Ticket: React.FC<TProps> = ({ticket, type}) => {
             {type === "tickets"
                 ? null
                 : <td className="td-button">
-                    <Button type="main" onClick={buyHandler}>Купить</Button>
+                    <Button type="main" onClick={() => {
+                        const chosenTicket: TicketType = {
+                            id: ticket.id,
+                            departureCity: ticket.departureCity,
+                            destinationCity: ticket.destinationCity,
+                            departureDate: departureDate,
+                            departureTime: departureTime,
+                            arrivalTime: arrivalTime,
+                            duration: ticket.duration,
+                            price: ticket.price
+                        }
+
+                        handleBuyTicket?.(chosenTicket);
+                    }}>Купить</Button>
                 </td>
             }
         </tr>

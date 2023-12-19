@@ -9,6 +9,9 @@ import TicketService from "../../services/TicketService";
 import Modal from "../../components/Modal/Modal";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
+import AuthService from "../../services/AuthService";
+import Loading from "../../components/Loading/Loading";
+import SuccessIcon from "../../assets/icons/success-icon.svg";
 
 
 
@@ -21,15 +24,21 @@ const RoutesPage = () => {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [passportSerial, setPassportSerial] = useState("");
+    const [passportNumber, setPassportNumber] = useState("");
 
     const [tickets, setTickets] = useState<TicketType[]>([]);
+    const [chosenTicket, setChosenTicket] = useState<TicketType | null>(null);
 
     const [searchPerformed, setSearchPerformed] = useState(false);
     const [paddingTop, setPaddingTop] = useState("");
 
     const searchFormRef = useRef<HTMLDivElement>(null);
 
-    const [isModalActive, setIsModalActive] = useState(true);
+    const [isDocModalActive, setIsDocModalActive] = useState(false);
+    const [isBuyModalActive, setIsBuyModalActive] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     useEffect(() => {
         if (departureCity && destinationCity && departureDate) {
@@ -96,6 +105,76 @@ const RoutesPage = () => {
         setSearchPerformed(true);
     }
 
+
+    const handleBuyTicket = async (ticket: TicketType) => {
+        try {
+            const {data} = await AuthService.getUser();
+            const {user} = data;
+            setChosenTicket(ticket);
+
+            if (!user.documentNumber) {
+                setFirstName(user.firstName || "");
+                setLastName(user.lastName || "");
+                setIsDocModalActive(true);
+                return;
+            }
+
+            setIsBuyModalActive(true);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    const submitDocHandler: FormEventHandler<HTMLFormElement> = (e) => {
+        e.preventDefault();
+        const formData = {
+            firstName,
+            lastName,
+            documentNumber: +(passportSerial + passportNumber)
+        }
+
+        setIsLoading(true);
+        AuthService.update(formData)
+            .then(() => {
+                setIsDocModalActive(false);
+                setIsBuyModalActive(true);
+            })
+            .catch(e => {
+                console.log(e);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            })
+    }
+
+    const buyTicket: FormEventHandler<HTMLFormElement> = (e) => {
+        e.preventDefault();
+        if (!chosenTicket) return;
+
+        setIsLoading(true);
+        TicketService.addTicket(chosenTicket.id)
+            .then(({data}) => {
+                console.log(data);
+                setTimeout(() => {
+                    setIsBuyModalActive(false);
+                    setIsSuccess(false);
+                }, 3000);
+            })
+            .catch(e => {
+                console.log(e);
+            })
+            .finally(() => {
+                setIsLoading(false);
+                setIsSuccess(true);
+            })
+    }
+
+    const closeModalHandler = () => {
+        setIsBuyModalActive(false);
+        setIsDocModalActive(false);
+        setChosenTicket(null);
+    }
+
     return (
         <div className="routes-page">
             <div className="wrapper">
@@ -115,27 +194,77 @@ const RoutesPage = () => {
                                 <h3>Расписание автобусов</h3>
                                 <h1>{`${searchParams.get("departureCity")} — ${searchParams.get("destinationCity")}`}</h1>
                                 <h3 className="routes-count">{tickets.length ? `Найдено: ${tickets.length} ${routeCount(tickets.length)}` : "Рейсы на эту дату не найдены"}</h3>
-                                <TicketList tickets={tickets} type="routes"/>
+                                <TicketList tickets={tickets} type="routes" handleBuyTicket={handleBuyTicket}/>
                             </div>
                         :
                             null
                     }
                 </div>
             </div>
-            <Modal title="Покупка билета">
-                <form className="passport-info-form">
-                    <p>Для продолжения укажите личные данные</p>
-                    <Input id="firstName" value="" setValue={() => {}} label="Имя"/>
-                    <Input id="lastName" value="" setValue={() => {}} label="Фамилия"/>
-                    <p>Паспортные данные</p>
-                    <Input id="passSerial" value="" setValue={() => {}} label="Серия"/>
-                    <Input id="passNumber" value="" setValue={() => {}} label="Номер"/>
-                    <div className="modal-buttons">
-                        <Button type="main" submit>Принять</Button>
-                        <Button>Отмена</Button>
-                    </div>
-                </form>
-            </Modal>
+            {
+                isDocModalActive
+                    ? <Modal title="Покупка билета" onClose={closeModalHandler}>
+                        <form className="passport-info-form" onSubmit={submitDocHandler}>
+                            <p>Для продолжения укажите личные данные:</p>
+                            <Input id="firstName" value={firstName} setValue={setFirstName} label="Имя"/>
+                            <Input id="lastName" value={lastName} setValue={setLastName} label="Фамилия"/>
+                            <p>Паспортные данные:</p>
+                            <Input id="passSerial" value={passportSerial} setValue={setPassportSerial} label="Серия"/>
+                            <Input id="passNumber" value={passportNumber} setValue={setPassportNumber} label="Номер"/>
+                            <div className="modal-buttons">
+                                <Button type="main" submit>Принять</Button>
+                                <Button onClick={closeModalHandler}>Отмена</Button>
+                            </div>
+                        </form>
+
+                        {isLoading
+                            ? <Loading/>
+                            : null
+                        }
+                    </Modal>
+                    : null
+            }
+            {
+                isBuyModalActive && chosenTicket
+                    ? <Modal title={isSuccess ? "Успешно" : "Покупка билета"} onClose={closeModalHandler}>
+                        {
+                            isSuccess
+                                ? <div className="success-message">
+                                    <img src={SuccessIcon} alt="Успешно"/>
+                                    <p>Подробную информацию
+                                        о купленном билете вы сможете найти
+                                        в личном кабинете
+                                    </p>
+                                    <Button type="main" path="/tickets">В личный кабинет</Button>
+                                </div>
+                                : <form className="buy-ticket-form" onSubmit={buyTicket}>
+                                    <p>Подтвердите покупку:</p>
+                                    <div className="chosen-ticket">
+                                        <span>{chosenTicket.departureCity}</span>
+                                        <span> — </span>
+                                        <span>{chosenTicket.destinationCity}</span>
+                                        <p>Дата отправления: <span>{chosenTicket.departureDate}</span></p>
+                                        <p>Время отправления: <span>{chosenTicket.departureTime}</span></p>
+                                        <p>Время прибытия: <span>{chosenTicket.arrivalTime}</span></p>
+                                        <p>Время в пути: <span>{chosenTicket.duration}ч.</span></p>
+                                    </div>
+                                    <p>К оплате</p>
+                                    <span className="chosen-ticket-price">1400 руб.</span>
+
+                                    <div className="modal-buttons">
+                                        <Button type="main" submit>Оплатить</Button>
+                                        <Button onClick={closeModalHandler}>Отмена</Button>
+                                    </div>
+                                </form>
+                        }
+
+                        {isLoading
+                            ? <Loading/>
+                            : null
+                        }
+                    </Modal>
+                    : null
+            }
         </div>
     );
 };

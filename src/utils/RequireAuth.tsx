@@ -1,16 +1,17 @@
 import React, {useEffect} from 'react';
 import AuthService from "../services/AuthService";
-import {useAppDispatch} from "../store";
-import {setIsLoading, setUser} from "../store/userSlice";
+import {useAppDispatch, useAppSelector} from "../store";
+import {selectUser, setIsLoading, setUser} from "../store/userSlice";
 import {useLocation} from "react-router-dom";
 
 const RequireAuth = () => {
     const dispatch = useAppDispatch();
+    const firstName = useAppSelector(selectUser);
     const location = useLocation();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        if (token) {
+        if (token && !firstName) {
             dispatch(setIsLoading(true));
             AuthService.auth()
                 .then((result) => {

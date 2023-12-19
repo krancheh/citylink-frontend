@@ -7,6 +7,8 @@ export interface TicketType {
     duration: number;
     price: number;
     departureDate: string | number;
+    departureTime?: string;
+    arrivalTime?: string
     seatNo?: number;
 }
 
@@ -16,6 +18,7 @@ export interface User {
     middleName?: string;
     lastName?: string;
     phoneNumber: string;
+    documentNumber?: number;
     ticketsAmount?: number;
     email?: string;
     gender?: boolean;

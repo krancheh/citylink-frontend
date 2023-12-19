@@ -2,7 +2,11 @@ import {createApiFromPath} from "../api";
 import {ApiFromPath, User} from "../types";
 
 export interface UserData extends User {
-    password: string;
+    password?: string;
+}
+
+interface UpdateUserData extends Omit<UserData, "phoneNumber"> {
+    phoneNumber?: number;
 }
 
 interface AuthData {
@@ -29,7 +33,7 @@ export default class AuthService {
     static async signup(user: UserData): Promise<AuthData> {
         return this.userApi.post("/signup", user);
     }
-    static async update(user: UserData) {
+    static async update(user: UpdateUserData) {
         return this.userApi.put("/update", user);
     }
     static async auth(): Promise<AuthData> {

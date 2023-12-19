@@ -4,12 +4,14 @@
 .loading {
   display: flex;
   align-items: center;
+
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   z-index: 100;
+  border-radius: inherit;
 
   background-color: rgba(255, 255, 255, 0.63);
 

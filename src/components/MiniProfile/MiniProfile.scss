@@ -1,4 +1,4 @@
-@use "./src/index";
+@use "../../index";
 
 .mini-profile {
   position: relative;
@@ -34,7 +34,7 @@
 
     white-space: nowrap;
 
-    @media (max-width: 800px) {
+    @media (max-width: 1080px) {
       top: unset;
       right: unset;
       bottom: 19px;
