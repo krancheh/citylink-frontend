@@ -20,7 +20,8 @@ const TicketsPage = () => {
 
         TicketService.getTickets()
             .then(result => {
-                setTickets(result.data.tickets)
+                const {tickets} = result.data;
+                setTickets(tickets.reverse());
             })
             .catch(e => {
                 console.log(e)

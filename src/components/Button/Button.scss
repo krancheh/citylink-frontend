@@ -15,7 +15,11 @@
   }
 }
 
-.button:hover {
+.button:disabled {
+  opacity: .5;
+}
+
+.button:hover:enabled {
   opacity: 1;
   cursor: pointer;
 }

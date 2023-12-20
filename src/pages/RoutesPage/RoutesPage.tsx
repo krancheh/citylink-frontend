@@ -1,7 +1,7 @@
-import React, {FormEventHandler, useEffect, useRef, useState} from 'react';
+import React, {ChangeEventHandler, FormEventHandler, useEffect, useRef, useState} from 'react';
 import './RoutesPage.scss';
 import SearchForm from "../../components/SearchForm/SearchForm";
-import {URLSearchParamsInit, useSearchParams} from "react-router-dom";
+import {URLSearchParamsInit, useNavigate, useSearchParams} from "react-router-dom";
 import {TicketType} from "../../types";
 import TicketList from "../../components/TicketList/TicketList";
 import routeCount from "../../utils/routeCount";
@@ -17,6 +17,7 @@ import SuccessIcon from "../../assets/icons/success-icon.svg";
 
 const RoutesPage = () => {
     const [searchParams, setSearchParams] = useSearchParams({});
+    const navigate = useNavigate();
 
     const [departureCity, setDepartureCity] = useState(searchParams.get("departureCity") || "");
     const [destinationCity, setDestinationCity] = useState(searchParams.get("destinationCity") || "");
@@ -25,7 +26,9 @@ const RoutesPage = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [passportSerial, setPassportSerial] = useState("");
+    const [passportSerialError, setPassportSerialError] = useState("");
     const [passportNumber, setPassportNumber] = useState("");
+    const [passportNumberError, setPassportNumberError] = useState("");
 
     const [tickets, setTickets] = useState<TicketType[]>([]);
     const [chosenTicket, setChosenTicket] = useState<TicketType | null>(null);
@@ -39,6 +42,7 @@ const RoutesPage = () => {
     const [isBuyModalActive, setIsBuyModalActive] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
     const [timeToCLose, setTimeToClose] = useState(5);
     const interval = useRef<NodeJS.Timer>();
@@ -80,6 +84,15 @@ const RoutesPage = () => {
     }, []);
 
 
+    useEffect(() => {
+        if (passportNumberError || passportSerialError) {
+            setIsSubmitDisabled(true);
+        } else {
+            setIsSubmitDisabled(false);
+        }
+    }, [passportSerialError, passportNumberError])
+
+
 
     const handleSearch: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
@@ -114,6 +127,9 @@ const RoutesPage = () => {
         try {
             const {data} = await AuthService.getUser();
             const {user} = data;
+
+            if (!user) return navigate("/login");
+
             setChosenTicket(ticket);
 
             if (!user.documentNumber) {
@@ -126,6 +142,7 @@ const RoutesPage = () => {
             setIsBuyModalActive(true);
         } catch (e) {
             console.log(e);
+            navigate("/login");
         }
     }
 
@@ -149,6 +166,32 @@ const RoutesPage = () => {
             .finally(() => {
                 setIsLoading(false);
             })
+    }
+
+    const passportSerialHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+        setPassportSerialError("");
+        const inputValue = e.target.value;
+
+        if (!inputValue) {
+            return setPassportSerialError("Заполните поле");
+        }
+
+        if (!/\d/g.test(inputValue) || inputValue.length !== 4) {
+            return setPassportSerialError("Серия должна состоять из 4 цифр");
+        }
+    }
+
+    const passportNumberHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+        setPassportNumberError("");
+        const inputValue = e.target.value;
+
+        if (!inputValue) {
+            return setPassportNumberError("Заполните поле");
+        }
+
+        if (!/\d/g.test(inputValue) || inputValue.length !== 6) {
+            return setPassportNumberError("Номер должен состоять из 6 цифр");
+        }
     }
 
     const buyTicket: FormEventHandler<HTMLFormElement> = (e) => {
@@ -219,13 +262,13 @@ const RoutesPage = () => {
                     ? <Modal title="Покупка билета" onClose={closeModalHandler}>
                         <form className="passport-info-form" onSubmit={submitDocHandler}>
                             <p>Для продолжения укажите личные данные:</p>
-                            <Input id="firstName" value={firstName} setValue={setFirstName} label="Имя"/>
-                            <Input id="lastName" value={lastName} setValue={setLastName} label="Фамилия"/>
+                            <Input id="firstName" value={firstName} setValue={setFirstName} label="Имя" required/>
+                            <Input id="lastName" value={lastName} setValue={setLastName} label="Фамилия" required/>
                             <p>Паспортные данные:</p>
-                            <Input id="passSerial" value={passportSerial} setValue={setPassportSerial} label="Серия"/>
-                            <Input id="passNumber" value={passportNumber} setValue={setPassportNumber} label="Номер"/>
+                            <Input id="passSerial" value={passportSerial} setValue={setPassportSerial} onBlur={passportSerialHandler} errorMessage={passportSerialError} label="Серия" required/>
+                            <Input id="passNumber" value={passportNumber} setValue={setPassportNumber} onBlur={passportNumberHandler} errorMessage={passportNumberError} label="Номер" required/>
                             <div className="modal-buttons">
-                                <Button type="main" submit>Принять</Button>
+                                <Button type="main" submit disabled={isSubmitDisabled}>Принять</Button>
                                 <Button onClick={closeModalHandler}>Отмена</Button>
                             </div>
                         </form>
@@ -263,7 +306,7 @@ const RoutesPage = () => {
                                         <p>Время в пути: <span>{chosenTicket.duration}ч.</span></p>
                                     </div>
                                     <p>К оплате</p>
-                                    <span className="chosen-ticket-price">1400 руб.</span>
+                                    <span className="chosen-ticket-price">{chosenTicket.price} руб.</span>
 
                                     <div className="modal-buttons">
                                         <Button type="main" submit>Оплатить</Button>

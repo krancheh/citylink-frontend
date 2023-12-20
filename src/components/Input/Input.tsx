@@ -8,7 +8,7 @@ type TProps = {
     type?: string;
     label?: string;
     onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-    onBlur?: (e: {target: {value: string}}) => void;
+    onBlur?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     formId?: string;
     errorMessage?: string;
     required?: boolean;

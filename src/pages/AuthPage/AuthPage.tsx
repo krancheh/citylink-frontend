@@ -6,8 +6,6 @@ import welcomeImage from "../../assets/images/welcome.png"
 import LoginForm from "../../components/LoginForm/LoginForm";
 import SignupForm from "../../components/SignupForm/SignupForm";
 import AuthService, {UserData} from "../../services/AuthService";
-import {useAppDispatch} from "../../store";
-import {setUser} from "../../store/userSlice";
 
 interface AuthFC {
     [key: string]: typeof AuthService.login;
@@ -17,9 +15,7 @@ const AuthPage = () => {
     const {pathname} = useLocation();
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [isSuccess, setIsSuccess] = useState(!!localStorage.getItem("token"))
-
-    const dispatch = useAppDispatch();
+    const [isSuccess, setIsSuccess] = useState(!!localStorage.getItem("token"));
 
     const auth: AuthFC = {
         "/login": (data) => AuthService.login(data),
@@ -27,6 +23,7 @@ const AuthPage = () => {
     }
 
     const makeRequest = async (data: UserData) => {
+        data.phoneNumber = data.phoneNumber.replace(/\D/g, "");
         setIsLoading(true);
         auth[pathname](data)
             .then((result) => {

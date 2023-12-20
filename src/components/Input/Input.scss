@@ -23,8 +23,9 @@ $red: #ff7a7a;
   }
 
   .error-message {
+    display: block;
     margin-left: 10px;
-    font-size: 14px;
+    font-size: 12px;
     color: $red;
   }
 

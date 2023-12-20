@@ -1,4 +1,4 @@
-import React, {MouseEventHandler} from 'react';
+import React from 'react';
 import {Link} from "react-router-dom";
 import './Button.scss'
 
@@ -12,7 +12,7 @@ type TProps = {
     submit?: boolean;
 }
 
-const Button: React.FC<TProps> = ({className, children, type = "default", onClick, path, submit = false}) => {
+const Button: React.FC<TProps> = ({className, children, type = "default", onClick, path, submit = false, disabled = false}) => {
 
     if (path) {
         return (
@@ -21,7 +21,7 @@ const Button: React.FC<TProps> = ({className, children, type = "default", onClic
     }
 
     return (
-        <button type={submit ? "submit" : "button"} className={`button ${type} ${className}`} onClick={onClick}>{children}</button>
+        <button type={submit ? "submit" : "button"} className={`button ${type} ${className}`} onClick={onClick} disabled={disabled}>{children}</button>
     )
 };
 
