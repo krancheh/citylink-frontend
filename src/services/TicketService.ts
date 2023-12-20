@@ -17,7 +17,7 @@ export default class TicketService {
         return this.ticketsApi.get("/getTickets");
     }
     static async getRoutes(route: RouteData) {
-        return this.routesApi.get("/getRoutes", {params: route});
+        return this.routesApi.get("/getRouteRecords", {params: route});
     }
     static async getCities(cityName: string) {
         return this.routesApi.get("/getCities", {params: {cityName: cityName}})
