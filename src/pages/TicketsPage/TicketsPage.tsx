@@ -53,13 +53,18 @@ const TicketsPage = () => {
 
                         {
                             isLoading
-                                ? <Loading/>
+                                ? null
                                 : tickets.length
                                     ? <TicketList tickets={tickets} type="tickets"/>
                                     : <span>У вас нет билетов</span>
                         }
 
                     </div>
+                    {
+                        isLoading
+                            ? <Loading/>
+                            : null
+                    }
                 </div>
             </div>
         </div>
