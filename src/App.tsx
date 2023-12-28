@@ -5,7 +5,6 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import RoutesPage from "./pages/RoutesPage/RoutesPage";
-import RequireAuth from "./utils/RequireAuth";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import TicketsPage from "./pages/TicketsPage/TicketsPage";
 
@@ -14,9 +13,6 @@ function App() {
     const router = createBrowserRouter(createRoutesFromElements(
         <Route errorElement={<ErrorPage/>}>
             <Route path="/" element={<Layout/>}>
-                {/* Public routes */}
-
-
                 <Route index element={<LandingPage/>}/>
                 <Route path="/login" element={<AuthPage/>}/>
                 <Route path="/signup" element={<AuthPage/>}/>

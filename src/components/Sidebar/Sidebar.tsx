@@ -30,11 +30,11 @@ const Sidebar: React.FC<TProps> = ({isActive, handler}) => {
                 </div>
 
                 <nav className="nav">
-                    <Link className="nav-link" to='/'>Домашняя страница</Link>
-                    <Link className="nav-link" to='/routes'>Билеты</Link>
-                    <Link className="nav-link" to='/'>Города</Link>
-                    <Link className="nav-link" to='/'>Автобусы</Link>
-                    <Link className="nav-link" to='/'>Цены</Link>
+                    <Link className={`nav-link ${pathname === '/' ? "active" : ""}`} to='/'>Домашняя страница</Link>
+                    <Link className={`nav-link ${pathname === '/routes' ? "active" : ""}`} to='/routes'>Билеты</Link>
+                    <Link className={`nav-link ${pathname === '/cities' ? "active" : ""}`} to='/'>Города</Link>
+                    <Link className={`nav-link ${pathname === '/buses' ? "active" : ""}`} to='/'>Автобусы</Link>
+                    <Link className={`nav-link ${pathname === '/prices' ? "active" : ""}`} to='/'>Цены</Link>
                 </nav>
 
                 <MiniProfile/>

@@ -1,3 +1,5 @@
+@use 'src/index';
+
 .sidebar {
   height: 100dvh;
   display: flex;
@@ -48,9 +50,33 @@
     flex-direction: column;
     gap: 10px;
     flex: 1 0 auto;
+
+    .nav-link {
+      position: relative;
+      font-size: 18px;
+      color: index.$common-grey;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: index.$common-black;
+    }
+
+    .nav-link.active {
+      color: index.$common-black;
+      opacity: 1;
+    }
+
+    .nav-link.active::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: -5px;
+      width: 2px;
+      height: 100%;
+      background-color: index.$base-color;
+    }
   }
-
-
 }
 
 .show {

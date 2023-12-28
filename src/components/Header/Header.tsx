@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import "./Header.scss";
 import Button from "../Button/Button";
 import {ReactComponent as SidebarIcon} from "../../assets/icons/sidebar-icon.svg";
@@ -10,6 +10,8 @@ type TProps = {
 }
 
 const Header: React.FC<TProps> = ({handler}) => {
+    const {pathname} = useLocation();
+
     return (
         <header className='header'>
             <div className="wrapper">
@@ -18,11 +20,11 @@ const Header: React.FC<TProps> = ({handler}) => {
                     <Link className='logo' to="/">City<span>Link</span></Link>
 
                     <nav className="nav">
-                        <Link className="nav-link" to='/'>Домашняя страница</Link>
-                        <Link className="nav-link" to='/routes'>Билеты</Link>
-                        <Link className="nav-link" to='/'>Города</Link>
-                        <Link className="nav-link" to='/'>Автобусы</Link>
-                        <Link className="nav-link" to='/'>Цены</Link>
+                        <Link className={`nav-link ${pathname === '/' ? "active" : ""}`} to='/'>Домашняя страница</Link>
+                        <Link className={`nav-link ${pathname === '/routes' ? "active" : ""}`} to='/routes'>Билеты</Link>
+                        <Link className={`nav-link ${pathname === '/cities' ? "active" : ""}`} to='/'>Города</Link>
+                        <Link className={`nav-link ${pathname === '/buses' ? "active" : ""}`} to='/'>Автобусы</Link>
+                        <Link className={`nav-link ${pathname === '/prices' ? "active" : ""}`} to='/'>Цены</Link>
                     </nav>
 
                     <MiniProfile/>
