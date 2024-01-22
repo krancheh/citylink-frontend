@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, FormEventHandler, useEffect, useRef, useState} from 'react';
+import React, {ChangeEventHandler, FormEventHandler, useCallback, useEffect, useRef, useState} from 'react';
 import './RoutesPage.scss';
 import SearchForm from "../../components/SearchForm/SearchForm";
 import {URLSearchParamsInit, useNavigate, useSearchParams} from "react-router-dom";
@@ -145,6 +145,7 @@ const RoutesPage = () => {
             navigate("/login");
         }
     }
+    const memoizedHandleBuyTicket = useCallback(handleBuyTicket, [navigate]);
 
     const submitDocHandler: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
@@ -250,7 +251,7 @@ const RoutesPage = () => {
                                 <h3>Расписание автобусов</h3>
                                 <h1>{`${searchParams.get("departureCity")} — ${searchParams.get("destinationCity")}`}</h1>
                                 <h3 className="routes-count">{tickets.length ? `Найдено: ${tickets.length} ${routeCount(tickets.length)}` : "Рейсы на эту дату не найдены"}</h3>
-                                <TicketList tickets={tickets} type="routes" handleBuyTicket={handleBuyTicket}/>
+                                <TicketList tickets={tickets} type="routes" handleBuyTicket={memoizedHandleBuyTicket}/>
                             </div>
                         :
                             null

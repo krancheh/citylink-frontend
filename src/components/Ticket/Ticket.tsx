@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {TicketType} from "../../types";
 import Button from "../Button/Button";
 import './Ticket.scss';
@@ -9,7 +9,7 @@ interface TProps {
     handleBuyTicket?: (ticket: TicketType) => void;
 }
 
-const Ticket: React.FC<TProps> = ({ticket, type, handleBuyTicket}) => {
+const Ticket: React.FC<TProps> = memo(({ticket, type, handleBuyTicket}) => {
     const date = new Date(ticket.departureDate);
     const departureTime = `${date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
     date.setHours(date.getHours() + ticket.duration);
@@ -59,6 +59,6 @@ const Ticket: React.FC<TProps> = ({ticket, type, handleBuyTicket}) => {
             }
         </tr>
     );
-};
+});
 
 export default Ticket;

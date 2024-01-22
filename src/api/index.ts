@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://192.168.31.120:7000/api"; // ПОМЕНЯТЬ АЙПИ
+const baseURL = "http://localhost:7000/api";
 
 const $api = axios.create({
     baseURL: baseURL,
