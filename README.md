@@ -10,4 +10,4 @@
 4. Ведение учета купленных билетов пользователя
 
 ## Стек проекта
-`React` `Redux-toolkit` `React-router-dom` `SASS/SCSS` `Axios`
+`React` `TypeScript` `Redux-toolkit` `React-router-dom` `SASS/SCSS` `Axios`
