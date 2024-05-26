@@ -1,5 +1,5 @@
-import {createApiFromPath} from "../api";
-import {ApiFromPath, User} from "../types";
+import { createApiFromPath } from "../api";
+import { ApiFromPath, User } from "../types";
 
 export interface UserData extends User {
     password?: string;
@@ -34,7 +34,7 @@ export default class AuthService {
         return this.userApi.post("/signup", user);
     }
     static async update(user: UpdateUserData) {
-        return this.userApi.put("/update", user);
+        return this.userApi.patch("/update", user);
     }
     static async auth(): Promise<AuthData> {
         return this.userApi.get("/auth");

@@ -1,8 +1,8 @@
-import React, {ChangeEventHandler, FormEventHandler, useCallback, useEffect, useRef, useState} from 'react';
+import { ChangeEventHandler, FormEventHandler, useCallback, useEffect, useRef, useState } from 'react';
 import './RoutesPage.scss';
 import SearchForm from "../../components/SearchForm/SearchForm";
-import {URLSearchParamsInit, useNavigate, useSearchParams} from "react-router-dom";
-import {TicketType} from "../../types";
+import { URLSearchParamsInit, useNavigate, useSearchParams } from "react-router-dom";
+import { TicketType } from "../../types";
 import TicketList from "../../components/TicketList/TicketList";
 import routeCount from "../../utils/routeCount";
 import TicketService from "../../services/TicketService";
@@ -43,6 +43,7 @@ const RoutesPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+    const [error, setError] = useState("");
 
     const [timeToCLose, setTimeToClose] = useState(5);
     const interval = useRef<NodeJS.Timer>();
@@ -53,7 +54,9 @@ const RoutesPage = () => {
             const data = {
                 departureCity,
                 destinationCity,
-                departureDate: new Date(departureDate).getTime().toString()
+                departureDate: new Date(departureDate).getTime().toString(),
+                entriesNumber: 25,
+                pageNumber: 0,
             }
 
             TicketService.getRoutes(data)
@@ -103,6 +106,8 @@ const RoutesPage = () => {
             departureCity: formData.get("departureCity") as string,
             destinationCity: formData.get("destinationCity") as string,
             departureDate: formData.get("departureDate") as string,
+            pageNumber: "0",
+            entriesNumber: "50"
         };
 
         setSearchParams(searchParams);
@@ -110,7 +115,9 @@ const RoutesPage = () => {
         const data = {
             departureCity: searchParams.departureCity.toString().toLowerCase(),
             destinationCity: searchParams.destinationCity.toString().toLowerCase(),
-            departureDate: new Date(formData.get("departureDate") as string).getTime().toString(),
+            departureDate: formData.get("departureDate") ? new Date(formData.get("departureDate") as string).getTime().toString() : undefined,
+            pageNumber: 0,
+            entriesNumber: 50
         }
 
         TicketService.getRoutes(data)
@@ -125,8 +132,8 @@ const RoutesPage = () => {
 
     const handleBuyTicket = async (ticket: TicketType) => {
         try {
-            const {data} = await AuthService.getUser();
-            const {user} = data;
+            const { data } = await AuthService.getUser();
+            const { user } = data;
 
             if (!user) return navigate("/login");
 
@@ -202,6 +209,7 @@ const RoutesPage = () => {
         setIsLoading(true);
         TicketService.addTicket(chosenTicket.id)
             .then(() => {
+                setIsSuccess(true);
                 interval.current = setInterval(() => {
                     setTimeToClose((prevState) => prevState - 1);
                 }, 1000)
@@ -210,15 +218,13 @@ const RoutesPage = () => {
                     interval && clearInterval(interval.current);
                     setTimeToClose(5);
                     setIsBuyModalActive(false);
-                    setIsSuccess(false);
                 }, 5000);
             })
             .catch(e => {
-                console.log(e);
+                setError(e.message || "Произошла ошибка");
             })
             .finally(() => {
                 setIsLoading(false);
-                setIsSuccess(true);
             })
     }
 
@@ -230,44 +236,45 @@ const RoutesPage = () => {
         clearInterval(interval.current);
         clearTimeout(timer.current);
         setTimeToClose(5);
+        setError('');
     }
 
     return (
         <div className="routes-page">
             <div className="wrapper">
-                <div className="routes-page__inner" style={{paddingTop: `${searchPerformed ? "100px" : paddingTop}`}}>
+                <div className="routes-page__inner" style={{ paddingTop: `${searchPerformed ? "100px" : paddingTop}` }}>
                     <SearchForm
                         searchFormRef={searchFormRef}
                         searchPerformed={searchPerformed}
-                        departureCityState={{departureCity, setDepartureCity}}
-                        destinationCityState={{destinationCity, setDestinationCity}}
-                        departureDateState={{departureDate, setDepartureDate}}
+                        departureCityState={{ departureCity, setDepartureCity }}
+                        destinationCityState={{ destinationCity, setDestinationCity }}
+                        departureDateState={{ departureDate, setDepartureDate }}
                         handleSearch={handleSearch}
                     />
                     {
                         searchPerformed
-                        ?
+                            ?
                             <div className="found-panel">
                                 <h3>Расписание автобусов</h3>
                                 <h1>{`${searchParams.get("departureCity")} — ${searchParams.get("destinationCity")}`}</h1>
                                 <h3 className="routes-count">{tickets.length ? `Найдено: ${tickets.length} ${routeCount(tickets.length)}` : "Рейсы на эту дату не найдены"}</h3>
-                                <TicketList tickets={tickets} type="routes" handleBuyTicket={memoizedHandleBuyTicket}/>
+                                <TicketList tickets={tickets} type="routes" handleBuyTicket={memoizedHandleBuyTicket} />
                             </div>
-                        :
+                            :
                             null
                     }
                 </div>
             </div>
             {
                 isDocModalActive
-                    ? <Modal title="Покупка билета" onClose={closeModalHandler}>
+                    ? <Modal title="Бронирование билета" onClose={closeModalHandler}>
                         <form className="passport-info-form" onSubmit={submitDocHandler}>
                             <p>Для продолжения укажите личные данные:</p>
-                            <Input id="firstName" value={firstName} setValue={setFirstName} label="Имя" required/>
-                            <Input id="lastName" value={lastName} setValue={setLastName} label="Фамилия" required/>
+                            <Input id="firstName" value={firstName} setValue={setFirstName} label="Имя" required />
+                            <Input id="lastName" value={lastName} setValue={setLastName} label="Фамилия" required />
                             <p>Паспортные данные:</p>
-                            <Input id="passSerial" value={passportSerial} setValue={setPassportSerial} onBlur={passportSerialHandler} errorMessage={passportSerialError} label="Серия" required/>
-                            <Input id="passNumber" value={passportNumber} setValue={setPassportNumber} onBlur={passportNumberHandler} errorMessage={passportNumberError} label="Номер" required/>
+                            <Input id="passSerial" value={passportSerial} setValue={setPassportSerial} onBlur={passportSerialHandler} errorMessage={passportSerialError} label="Серия" required />
+                            <Input id="passNumber" value={passportNumber} setValue={setPassportNumber} onBlur={passportNumberHandler} errorMessage={passportNumberError} label="Номер" required />
                             <div className="modal-buttons">
                                 <Button type="main" submit disabled={isSubmitDisabled}>Принять</Button>
                                 <Button onClick={closeModalHandler}>Отмена</Button>
@@ -275,7 +282,7 @@ const RoutesPage = () => {
                         </form>
 
                         {isLoading
-                            ? <Loading/>
+                            ? <Loading />
                             : null
                         }
                     </Modal>
@@ -283,20 +290,20 @@ const RoutesPage = () => {
             }
             {
                 isBuyModalActive && chosenTicket
-                    ? <Modal title={isSuccess ? "Успешно" : "Покупка билета"} onClose={closeModalHandler}>
+                    ? <Modal title={isSuccess ? "Успешно" : "Бронирование билета"} onClose={closeModalHandler}>
                         {
                             isSuccess
                                 ? <div className="success-message">
-                                    <img src={SuccessIcon} alt="Успешно"/>
+                                    <img src={SuccessIcon} alt="Успешно" />
                                     <p>Подробную информацию
-                                        о купленном билете вы сможете найти
+                                        о забронированном билете вы сможете найти
                                         в личном кабинете
                                     </p>
                                     <Button type="main" path="/tickets">В личный кабинет</Button>
                                     <p className="timer">Окно закроется через: {timeToCLose}</p>
                                 </div>
                                 : <form className="buy-ticket-form" onSubmit={buyTicket}>
-                                    <p>Подтвердите покупку:</p>
+                                    <p>Подтвердите билет:</p>
                                     <div className="chosen-ticket">
                                         <span>{chosenTicket.departureCity}</span>
                                         <span> — </span>
@@ -308,16 +315,17 @@ const RoutesPage = () => {
                                     </div>
                                     <p>К оплате</p>
                                     <span className="chosen-ticket-price">{chosenTicket.price} руб.</span>
+                                    <span className='error'>{error}</span>
 
                                     <div className="modal-buttons">
-                                        <Button type="main" submit>Оплатить</Button>
+                                        <Button type="main" submit>Забронировать</Button>
                                         <Button onClick={closeModalHandler}>Отмена</Button>
                                     </div>
                                 </form>
                         }
 
                         {isLoading
-                            ? <Loading/>
+                            ? <Loading />
                             : null
                         }
                     </Modal>

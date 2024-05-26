@@ -62,7 +62,8 @@
     }
   }
 
-  .td-departure, .td-destination {
+  .td-departure,
+  .td-destination {
 
     h4 {
       font-size: 20px;
@@ -72,6 +73,7 @@
         font-size: 18px;
       }
     }
+
     div {
       color: index.$base-color;
 
@@ -86,8 +88,7 @@
     left: 0;
     //position: relative;
 
-    @media (max-width: 800px) {
-    }
+    @media (max-width: 800px) {}
 
     .td-id {
       position: absolute;
@@ -167,6 +168,7 @@
 
 
   }
+
   .td-seat::before {
     content: "";
 
@@ -182,7 +184,7 @@
     width: 0;
     white-space: nowrap;
     bottom: 0;
-    right: 95px;
+    right: 110px;
 
     @media (max-width: 800px) {
       width: auto;
@@ -193,7 +195,14 @@
 
   .td-button {
     width: 0;
-    right: 85px;
-    bottom: 0;
+    right: 100px;
+    bottom: -8px;
+
+    button {
+      @media (max-width: 800px) {
+        padding: 8px 10px;
+        font-size: 12px;
+      }
+    }
   }
 }

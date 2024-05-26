@@ -1,8 +1,8 @@
-import React, {ChangeEventHandler, FormEventHandler, useEffect, useState} from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
 import Input from "../Input/Input";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "../Button/Button";
-import {UserData} from "../../services/AuthService";
+import { UserData } from "../../services/AuthService";
 import Loading from "../Loading/Loading";
 
 interface TProps {
@@ -11,7 +11,7 @@ interface TProps {
     isLoading: boolean;
 }
 
-const LoginForm: React.FC<TProps> = ({auth, error, isLoading}) => {
+const LoginForm: React.FC<TProps> = ({ auth, error, isLoading }) => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
     const [remember, setRemember] = useState(false);
@@ -62,16 +62,16 @@ const LoginForm: React.FC<TProps> = ({auth, error, isLoading}) => {
             if (inputValue.length === 1 && inputValue !== "7") {
                 inputValue = "7" + inputValue[0];
             }
-            const formattedValue = '+7 (' + inputValue.slice(1, 4) + ') ' +
-                inputValue.slice(4, 7) + ' - ' +
-                inputValue.slice(7, 9) + ' - ' +
+            const formattedValue = (inputValue.length > 1 ? '+7 (' : "") + inputValue.slice(1, 4) + (inputValue.length > 4 ? ') ' : "") +
+                inputValue.slice(4, 7) + (inputValue.length > 7 ? ' - ' : "") +
+                inputValue.slice(7, 9) + (inputValue.length > 9 ? ' - ' : "") +
                 inputValue.slice(9, 11);
 
             setPhoneNumber(formattedValue);
         }
     }
 
-    const submitHandler:FormEventHandler<HTMLFormElement> = (e) => {
+    const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
         const data: UserData = {
             phoneNumber, password
@@ -81,16 +81,16 @@ const LoginForm: React.FC<TProps> = ({auth, error, isLoading}) => {
 
     return (
         <form className="auth-form" onSubmit={submitHandler}>
-            {isLoading ? <Loading/> : null}
+            {isLoading ? <Loading /> : null}
             <h2>Авторизация</h2>
-            <Input id="phoneNumber" value={phoneNumber} setValue={setPhoneNumber} onChange={handlePhoneNumber} onBlur={handlePhoneNumberBlur} errorMessage={phoneNumberError} type="tel" autocomplete="tel" label="Номер телефона" required placeholder="+79238273782"/>
-            <Input id="password" value={password} setValue={setPassword} onBlur={handlePassword} errorMessage={passwordError} type="password" autocomplete="current-password" label="Пароль" required placeholder="•••••••"/>
+            <Input id="phoneNumber" value={phoneNumber} setValue={setPhoneNumber} onChange={handlePhoneNumber} onBlur={handlePhoneNumberBlur} errorMessage={phoneNumberError} type="tel" autocomplete="tel" label="Номер телефона" required placeholder="+79238273782" />
+            <Input id="password" value={password} setValue={setPassword} onBlur={handlePassword} errorMessage={passwordError} type="password" autocomplete="current-password" label="Пароль" required placeholder="•••••••" />
             <div className="checkbox">
-                <input id="remember" type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)}/>
+                <input id="remember" type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
                 <label htmlFor="remember">Запомнить</label>
             </div>
             {error ? <span className="form-error-message">{error}</span> : null}
-            <span style={{margin: "0 0 -20px 0"}}>Ещё нет учетной записи? <Link to="/signup">Зарегистрироваться</Link></span>
+            <span style={{ margin: "0 0 -20px 0" }}>Ещё нет учетной записи? <Link to="/signup">Зарегистрироваться</Link></span>
             <Button type="main" submit disabled={isSubmitDisabled}>Отправить</Button>
         </form>
     );
